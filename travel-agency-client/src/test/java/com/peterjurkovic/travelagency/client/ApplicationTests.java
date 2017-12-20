@@ -1,4 +1,4 @@
-package com.peterjurkovic.travelagency;
+package com.peterjurkovic.travelagency.client;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TravelagencyApplicationTests {
+public class ApplicationTests {
 
 	@Test
 	public void contextLoads() {

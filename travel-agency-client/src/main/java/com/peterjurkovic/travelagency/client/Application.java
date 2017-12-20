@@ -1,12 +1,12 @@
-package com.peterjurkovic.travelagency;
+package com.peterjurkovic.travelagency.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TravelagencyApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TravelagencyApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }

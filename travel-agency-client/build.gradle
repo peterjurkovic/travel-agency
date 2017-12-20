@@ -29,6 +29,7 @@ repositories {
 
 
 dependencies {
+compile project(':travel-agency-common')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
@@ -36,11 +37,12 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-websocket')
 	
 	 	
-	// compile 'org.webjars:webjars-locator:0.32-1'
+	compile 'com.nexmo:client:3.1.0'
 	compile 'org.webjars:bootstrap:3.3.7'
 	compile 'org.webjars:vue:2.5.3-1'
 	compile 'org.webjars:jquery:3.2.1'
-
+	compile 'com.thedeanda:lorem:2.1'
+	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE'
 	
 	
 	runtime('org.springframework.boot:spring-boot-devtools')
