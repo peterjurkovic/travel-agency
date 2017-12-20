@@ -1,0 +1,5 @@
+apply plugin:'java'
+ 
+group 'com.peterjurkovic.travelagency'
+ 
+ 
