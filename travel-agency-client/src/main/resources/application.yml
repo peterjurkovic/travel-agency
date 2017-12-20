@@ -3,7 +3,9 @@ spring:
     mongodb:
       database: travelagency
       username: travelagency
-      password: <REPLACE_ME> #set ENV VAR
 
   thymeleaf:
     cache: false
+    
+server:
+  port: 8001     

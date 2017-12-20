@@ -36,9 +36,10 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-websocket')
 	
 	 	
-
-	compile 'org.webjars:bootstrap:3.3.7-1'
+	// compile 'org.webjars:webjars-locator:0.32-1'
+	compile 'org.webjars:bootstrap:3.3.7'
 	compile 'org.webjars:vue:2.5.3-1'
+	compile 'org.webjars:jquery:3.2.1'
 
 	
 	
