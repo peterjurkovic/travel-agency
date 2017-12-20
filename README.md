@@ -5,6 +5,7 @@ Travel Agency integrated flow with call center.
 ## Stack
 - MongoDB 3.6
 - Spring Boot 2
+- Spring Data Key
 - Spring Security
 - Thymeleaf & Bootstrap & Vue.js
  
