@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Login</title>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-8 col-sm-6 col-md-4 col-sm-offset-2 col-md-offset-3">
+            
+                <fieldset>
+                    <h2>Verify your phone Sign In</h2>            
+                </fieldset>
+            
+            <hr />
+        	Don't have an account? <a href="/sign-up">Sign Up here</a>
+        </div>
+        
+        
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

@@ -7,7 +7,10 @@ Travel Agency integrated flow with call center.
 - Spring Boot 2
 - Spring Data Key
 - Spring Security
-- Thymeleaf & Bootstrap & Vue.js
+- Lombock
+- STOMP
+- Thymeleaf & Bootstrap & jQuery & S Vue.js
+- Nexmo API platform
  
 
 ## Develompent setup

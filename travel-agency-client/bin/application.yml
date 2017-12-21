@@ -8,4 +8,7 @@ spring:
     cache: false
     
 server:
-  port: 8001     
+  port: 8001
+  
+company:
+  name: TravelWise  

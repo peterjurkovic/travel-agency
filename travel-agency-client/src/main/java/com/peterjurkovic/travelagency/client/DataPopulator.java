@@ -1,8 +1,5 @@
 package com.peterjurkovic.travelagency.client;
 
-
-import java.util.Random;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,20 +66,29 @@ public class DataPopulator implements CommandLineRunner{
         userRepository.deleteAll();
         String pass = passwordEncoder.encode("123456");
         
-        User peter = new User("email@peterjurkovic.sk", pass  , "Peter" , "Jurkovic");
+        User peter = user("email"+ " @ " +"peterjurkovic.sk", pass  , "Peter" , "Jurkovic");
         userRepository.save(peter);
         
-        User nicola = new User("nicola.giacchetta@nexmo.com", pass  , "Peter" , "Jurkovic");
+        User nicola = user("nicola.giacchetta"+ " @ " +"nexmo.com", pass  , "Peter" , "Jurkovic");
         userRepository.save(nicola);
         
         for(int i = 0; i < 20; i++)
             userRepository.save( generateUser(lorem) );
     }
     
+    private User user(String email, String pass, String fistName, String lastName){
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(pass);
+        user.setFirstName(fistName);
+        user.setLastName(lastName);
+        return user;
+    }
+    
     private User generateUser(Lorem lorem){
         User user = new User();
         user.setEmail(lorem.getEmail());
-        user.setFistName( lorem.getFirstName() );
+        user.setFirstName( lorem.getFirstName() );
         user.setLastName( lorem.getLastName());
         return user;
     }
