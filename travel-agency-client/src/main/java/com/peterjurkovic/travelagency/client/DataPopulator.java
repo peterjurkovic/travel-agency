@@ -1,6 +1,8 @@
 package com.peterjurkovic.travelagency.client;
 
 
+import java.util.Random;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +47,17 @@ public class DataPopulator implements CommandLineRunner{
     private void populateTrips(Lorem lorem) {
         log.info("Populating tips...");
         tripRepository.deleteAll();
-        for(int i = 0; i < 20; i++){
-            Trip trip = new Trip(
-                    lorem.getTitle(5, 50) , Country.CZ, 
-                    lorem.getParagraphs(150, 500),
-                    lorem.getParagraphs(250, 5000)
-                    );
-            
+        int img = 1;
+        for(int i = 0; i < 9; i++){
+            Trip trip = new Trip();
+            trip.setCreatedAt(trip.getCreatedAt().minusSeconds( img * 3337 ));
+            trip.setTitle( lorem.getTitle(2, 5));
+            trip.setCountryCode((i % 2 == 0 ? Country.CZ : Country.US));
+            trip.setDescription(lorem.getTitle(25, 40));
+            trip.setContent(lorem.getParagraphs(3, 10));     
+            trip.setAvatarUrl("http://upload.peterjurkovic.com/img/ta/" + img + ".jpg");
+            trip.setPurchases( i * img );         
+            if(img++ >= 6) img = 1;
             tripRepository.save(trip);
         }
         

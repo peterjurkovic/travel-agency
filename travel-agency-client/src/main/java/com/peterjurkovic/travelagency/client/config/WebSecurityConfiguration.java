@@ -26,7 +26,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/", "/home", "/trip/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -54,4 +54,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
     public PasswordEncoder passwordEncodeBean() {
         return new BCryptPasswordEncoder();
     }
+    
+    
 }

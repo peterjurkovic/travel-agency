@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header-css">
+    <title th:text="${trip.title}">Trip Detail</title>
+</head>
+<body>
+	<nav th:replace="fragments/header :: header"/>
+
+  	<div class="container">
+
+        <!-- Page Header -->
+     
+		<div class="row" style="margin-top: 1.5em">
+			<div class="col-md-3">
+				<img class="img-responsive" th:src="${trip.avatarUrl}" alt="${trip.title}">
+			</div>
+			<div class="col-md-9" >
+				<h1 style="margin-top:0px" th:text="${trip.title}" >Title</h1>
+				<p style="margin: 1em 0;color: #555" th:text="${{trip.createdAt}}" class="row"></p>
+				<p th:text="${trip.description}">Trip description</p>
+			</div>
+		</div>
+		
+		<hr />
+		
+		<div class="row">
+			<h3>Some details about destination</h3>
+			<p th:text="${trip.content}">Content</p>
+		</div>
+        
+	</div>
+    
+	<footer th:include="fragments/footer :: footer" />
+</body>
+</html>

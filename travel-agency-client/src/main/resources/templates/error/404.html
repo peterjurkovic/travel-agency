@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header-css">
+    <title>404 - Page not found</title>
+</head>
+<body>
+	<nav th:replace="fragments/header :: header"/>
+
+  	<div class="container">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12" style="margin-top: 5em;margin-bottom: 3em">
+                <h1  class="page-header text-center">404 - Page not found</h1>
+            </div>
+        </div>
+
+		<div class="row">
+			<P class="text-center">We are sorry, but the page you are looking for was not found</P>
+		</div>
+		
+        
+	</div>
+    
+	<footer th:include="fragments/footer :: footer" />
+</body>
+</html>

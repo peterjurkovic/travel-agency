@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="row"  th:fragment="trips (trips)">
+    <div th:each="trip : ${trips}" class="col-md-4 portfolio-item">
+        <a href="#">
+            <img class="img-responsive" th:src="${trip.avatarUrl}" alt="${trip.title}">
+        </a>
+        <h3>
+            <a th:href="|/trip/${trip.id}|" th:text="${trip.title}">Trip title</a>
+        </h3>
+        <p th:text="${trip.description}">
+        	Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        	Nam viverra euismod odio, gravida pellentesque urna varius vitae.
+        </p>
+    </div>
+   
+</div>

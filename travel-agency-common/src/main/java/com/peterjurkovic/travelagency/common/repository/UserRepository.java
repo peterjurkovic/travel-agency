@@ -12,4 +12,6 @@ import com.peterjurkovic.travelagency.common.model.User;
 public interface UserRepository extends PagingAndSortingRepository<User, String> {
 
     Optional<User> findByEmail(String email);
+    
+    
 }
