@@ -72,6 +72,9 @@ public class DataPopulator implements CommandLineRunner{
         User peter = new User("email@peterjurkovic.sk", pass  , "Peter" , "Jurkovic");
         userRepository.save(peter);
         
+        User nicola = new User("nicola.giacchetta@nexmo.com", pass  , "Peter" , "Jurkovic");
+        userRepository.save(nicola);
+        
         for(int i = 0; i < 20; i++)
             userRepository.save( generateUser(lorem) );
     }
