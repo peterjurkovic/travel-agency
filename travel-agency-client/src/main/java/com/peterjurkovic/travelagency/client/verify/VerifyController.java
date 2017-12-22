@@ -4,7 +4,6 @@ import static com.peterjurkovic.travelagency.client.verify.VerifyCheckResult.fai
 import static com.peterjurkovic.travelagency.client.verify.VerifyCheckResult.ok;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

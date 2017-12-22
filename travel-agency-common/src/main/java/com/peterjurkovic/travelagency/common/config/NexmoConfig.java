@@ -4,18 +4,20 @@ package com.peterjurkovic.travelagency.common.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.nexmo.client.NexmoClient;
 import com.nexmo.client.auth.AuthMethod;
 import com.nexmo.client.auth.TokenAuthMethod;
 
+@Component
 @Configuration
 public class NexmoConfig {
 
-    @Value("${nexmo.api-key}")
+    @Value("${nexmo.apiKey}")
     private String apiKey;
     
-    @Value("${nexmo.api-secret}")
+    @Value("${nexmo.apiSecret}")
     private String apiSecret;
     
     

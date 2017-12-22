@@ -1,6 +1,5 @@
 package com.peterjurkovic.travelagency.client.siqnup;
 
-import java.util.function.Supplier;
 
 import javax.validation.Valid;
 
@@ -29,7 +28,7 @@ public class SignupController {
     private final PasswordEncoder passwordEncoder;
     
     @Autowired
-    private Supplier<VerifyAction> verifyAction;
+    private VerifyAction verifyAction;
     
     public SignupController(UserRepository userRepository, PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
@@ -56,7 +55,7 @@ public class SignupController {
             User user = form.toUser();
             user.setPassword( passwordEncoder.encode( form.getPassword()) ); 
             userRepository.save(user);
-            verifyAction.get().with(user, "/?welcome=1");
+            verifyAction.with(user, "/?welcome=1");
             log.info("New user created email={} phone={} ", form.getEmail(), form.getPhone() );
             return "redirect:/verify";
         }
