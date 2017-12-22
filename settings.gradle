@@ -1,2 +1,2 @@
 rootProject.name = 'travel-agency'
-include 'travel-agency-admin', 'travel-agency-client', 'travel-agency-common'
+include 'travel-agency-common', 'travel-agency-admin', 'travel-agency-client'

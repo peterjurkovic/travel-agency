@@ -1,12 +1,6 @@
-project.ext {
-    serviceVersion = ''
-    
-    springBootVersion = ''
-}
 
 
-
-allprojects {
+subprojects {
 	apply plugin: 'java'	
 	apply plugin: 'eclipse'
 	
@@ -21,7 +15,7 @@ allprojects {
 	dependencies {
 		
 		compile ("org.slf4j:slf4j-api:1.7.21")
-		
+    
 		
       	testCompile ('junit:junit:4.12')
 		testCompile ('pl.pragmatists:JUnitParams:1.0.6')
@@ -32,3 +26,18 @@ allprojects {
 
 
 
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.M7'
+	}
+
+   repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+     
+}
