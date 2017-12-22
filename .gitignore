@@ -27,6 +27,9 @@ hs_err_pid*
 /bin/
 !gradle/wrapper/gradle-wrapper.jar
 
+# Subproject
+travel-agency-admin/build/
+
 ### STS ###
 .apt_generated
 .classpath
