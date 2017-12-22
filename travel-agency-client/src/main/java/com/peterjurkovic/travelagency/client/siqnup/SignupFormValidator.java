@@ -10,6 +10,7 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.peterjurkovic.travelagency.common.model.User;
 import com.peterjurkovic.travelagency.common.repository.UserRepository;
+import com.peterjurkovic.travelagency.common.utils.PhoneUtils;
 
 class SignupFormValidator implements Validator {
 
@@ -50,9 +51,8 @@ class SignupFormValidator implements Validator {
     }
     
     private void validateValidPhone(SignupForm form, Errors errors){
-        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         try {
-          phoneUtil.parse(form.getPhone(), null);
+          PhoneUtils.toInternationalFormat(form.getPhone());
         } catch (NumberParseException e) {
             errors.rejectValue("phone", "phone.invalid", "It looks like " +form.getPhone()+ " is not a valid international number.");
         }
@@ -60,7 +60,7 @@ class SignupFormValidator implements Validator {
     
     private void validatePassword(SignupForm form, Errors errors){
         String password = form.getPassword();
-        if(password == null || !password.equals(form.getPassowrdConfirmation())){
+        if(password == null || !password.equals(form.getPasswordConfirmation())){
             errors.rejectValue("password", "password.equal", "Passwords do not match");
         }
     }

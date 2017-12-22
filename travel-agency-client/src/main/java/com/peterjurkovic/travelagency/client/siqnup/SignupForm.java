@@ -31,7 +31,7 @@ public @Data class SignupForm {
     private String password;
     
     @NotEmpty
-    private String passowrdConfirmation;
+    private String passwordConfirmation;
     
     public User toUser(){
         User user = new User();
