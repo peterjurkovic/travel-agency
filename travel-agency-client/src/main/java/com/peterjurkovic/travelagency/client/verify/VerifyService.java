@@ -30,6 +30,15 @@ public class VerifyService {
     public VerifyService(NexmoClient nexmoClient){
         this.nexmoClient = nexmoClient;
     }
+    public void cancelVerifycation(String requestId){
+        log.info("Canceling verificaion request ID: {}" , requestId);
+        try {
+            nexmoClient.getVerifyClient().cancelVerification(requestId);
+            log.info("A request {} has been canceled" , requestId);
+        } catch (Exception e) {
+            log.error("Verification cancellation has faild for requestId " + requestId, e);
+        }
+    }
     
     public Optional<VerifyResult> verify(User user){
         String phone = user.getPhone();

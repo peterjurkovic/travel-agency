@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -89,6 +88,7 @@ public class VerifyController {
         if(checkResult.isPresent()){
             if(checkResult.get().getStatus() == CheckResult.STATUS_OK){
                 log.info("Verification of Request ID was sucessfull", requestId);
+                userUtils.getLoggedUserDetails().get().markTwoFaAsCompleted();
                 return ok(verifyAction.getSuccessRedirectUrl());
             }
             
@@ -103,6 +103,10 @@ public class VerifyController {
         Optional<User> user = userUtils.getLoggedUser();
         
         if(user.isPresent()){
+            String requestId = verifyAction.getRequestId();
+            if(requestId  != null){
+                verifyService.cancelVerifycation(requestId);
+            }
             Optional<VerifyResult> verifyRsult = verifyService.verify(user.get());
             if(verifyRsult.isPresent()){
                 verifyAction.setRequestId(verifyRsult.get().getRequestId());
