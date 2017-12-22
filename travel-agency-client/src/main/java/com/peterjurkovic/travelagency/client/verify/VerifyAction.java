@@ -20,8 +20,12 @@ public @Data class VerifyAction {
     private String requestId;
     private String successRedirectUrl;
     
-    public void with(User use, String redirectUrl){
+    public void with(User user){
         this.user = Objects.requireNonNull(user);
+    }
+    
+    public void with(User user, String redirectUrl){
+        with(user);
         this.successRedirectUrl = Objects.requireNonNull(redirectUrl);
     }
    

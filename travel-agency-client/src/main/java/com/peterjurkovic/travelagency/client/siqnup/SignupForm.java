@@ -5,8 +5,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.google.i18n.phonenumbers.NumberParseException;
 import com.peterjurkovic.travelagency.common.model.User;
 import com.peterjurkovic.travelagency.common.model.User.Status;
+import com.peterjurkovic.travelagency.common.utils.PhoneUtils;
 
 import lombok.Data;
 
@@ -16,7 +18,7 @@ public @Data class SignupForm {
     @NotEmpty
     private String email;
     
-    @Pattern(regexp = "\\d{5,15}", message = "{Pattern.signupForm.phone}")
+    @Pattern(regexp = "\\+\\d{5,15}", message = "{Pattern.signupForm.phone}")
     @NotEmpty(message = "{NotEmpty.signupForm.phone}")
     private String phone;
     
@@ -38,7 +40,11 @@ public @Data class SignupForm {
         user.setEmail(email.trim());
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setPhone(phone);
+        try {
+            user.setPhone(PhoneUtils.toInternationalFormat(phone));
+        } catch (NumberParseException e) {
+            throw new IllegalArgumentException(e);
+        }
         user.setPassword(password);
         user.setStatus(Status.VERIFY);
         return user;

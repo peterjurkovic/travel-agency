@@ -43,9 +43,7 @@ compile project(':travel-agency-common')
 	compile 'com.thedeanda:lorem:2.1'
 	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE'
 	
-	
-	compile 'com.googlecode.libphonenumber:libphonenumber:8.8.8'
-	
+		
 	compileOnly('org.projectlombok:lombok')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

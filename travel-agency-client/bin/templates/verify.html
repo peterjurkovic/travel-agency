@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
 >
 <head>
-    <title>Login</title>
+    <title>Two factor authentication</title>
     <div th:replace="fragments/header :: header-css"/>
+    <script type="text/javascript" th:src="@{/static/js/verify.js}"></script>
 </head>
 <body>
 
@@ -13,23 +14,45 @@
 
     <div class="row" style="margin-top:20px">
         <div class="col-xs-8 col-sm-6 col-md-4 col-sm-offset-2 col-md-offset-3">
-            
+            <form class="verify-form">
                 <fieldset>
-                    <h2>Verify your phone Sign In</h2>
-                    
+                    <h2 style="margin:1em 0.5em">Verify your phone </h2>
+                    <div class="row">
 					<div class="col-xs-3 col-sm-3 col-md-3 form-group">
-						<label class="sr-only" for="verify1">First digit</label>
-						<input type="text" class="form-control input-lg number" type="text" value="" maxlength="1" min="0" max="9" size="2" autocomplete="off" autofocus="autofocus" />
+						<label class="sr-only" for="d1">First digit</label>
+						<input type="text" name="d1" class="form-control input-lg number" value="" maxlength="1" min="0" max="9" size="2" autocomplete="off" autofocus="autofocus" />
 					</div>
 					<div class="col-xs-3 col-sm-3 col-md-3 form-group">
-						<label class="sr-only" for="verify1">Second digit</label>
-						<input type="text" class="form-control input-lg number" type="text" value="" maxlength="1" min="0" max="9" size="2" autocomplete="off" autofocus="autofocus" />
+						<label class="sr-only" for="d2">Second digit</label>
+						<input type="text" name="d2" class="form-control input-lg number" value="" maxlength="1" min="0" max="9" size="2" autocomplete="off" />
 					</div>
-			            
+					<div class="col-xs-3 col-sm-3 col-md-3 form-group">
+						<label class="sr-only" for="d3">Third digit</label>
+						<input type="text" name="d3" class="form-control input-lg number" value="" maxlength="1" min="0" max="9" size="2" autocomplete="off" />
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 form-group">
+						<label class="sr-only" for="d3">Fourth digit</label>
+						<input type="text" name="d4" class="form-control input-lg number" value="" maxlength="1" min="0" max="9" size="2" autocomplete="off" />
+					</div>
+					</div>
+
+					<div class="alert alert-success hidden" role="alert">
+						<span class="glyphicon glyphicon-ok"></span>
+						Verification was successful.  
+					</div>
+					
+					<div class="alert alert-danger hidden" role="alert">
+						<span class="glyphicon glyphicon-remove"></span>
+						Invalid code
+					</div>
+					
+					
+			        <button type="submit" class="btn btn-primary disabled" style="margin:1em 0">Submit code &raquo;</button>    
                 </fieldset>
+            </form>
             
             <hr />
-        	Don't have an account? <a href="/sign-up">Sign Up here</a>
+        	Haven't got a code? <a class="resend" href="/sign-up">Resend code</a>
         </div>
         
         

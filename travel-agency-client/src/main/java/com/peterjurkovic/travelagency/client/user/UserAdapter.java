@@ -3,16 +3,17 @@ package com.peterjurkovic.travelagency.client.user;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.peterjurkovic.travelagency.common.model.User;
 
-public class UserAdapter implements UserDetails {
+public class UserAdapter implements TwoFaUserDetails {
     
     private static final long serialVersionUID = 6598170339813718068L;
     private final User user;
+    private final AtomicBoolean twoFaCompleted = new AtomicBoolean();
     
     public UserAdapter(User user){
         this.user = Objects.requireNonNull(user);
@@ -35,7 +36,7 @@ public class UserAdapter implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -57,6 +58,13 @@ public class UserAdapter implements UserDetails {
         return user;
     }
 
+    public void markTwoFaAsCompleted(){
+        this.twoFaCompleted.set( true );
+    }
+    
+    public boolean isTwoFaCompleted(){
+        return twoFaCompleted.get();
+    }
     
     
 }

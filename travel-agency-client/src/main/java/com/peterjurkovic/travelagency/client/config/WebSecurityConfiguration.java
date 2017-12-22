@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.peterjurkovic.travelagency.client.user.MongoUserDetialsService;
+import com.peterjurkovic.travelagency.client.verify.VerifyController;
 import com.peterjurkovic.travelagency.common.repository.UserRepository;
 
 @Configuration
@@ -26,7 +27,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/", "/home", "/trip/*", "/sign-up", "/verify").permitAll()
+                .antMatchers("/", "/home", "/trip/*", "/sign-up", VerifyController.URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

@@ -24,8 +24,8 @@
 				</div>
 				<div class="form-group">
 					<label>You phone</label>
-    				<input type="text" required="required" pattern="\d{5,15}" class="form-control" name="phone" aria-describedby="phoneHelp" placeholder="Enter your phone" th:field="*{phone}" />
-    				<small id="emailHelp" class="form-text text-muted">Please use an international format e.g.: 4477101235: </small>
+    				<input type="text" required="required" pattern="\+\d{5,15}" class="form-control" name="phone" aria-describedby="phoneHelp" placeholder="Enter your phone" th:field="*{phone}" />
+    				<small id="emailHelp" class="form-text text-muted">Please use an international format e.g.: +447756731234: </small>
 				</div>
 				
 				<div class="form-group row">
@@ -46,7 +46,7 @@
 					</div>
 					<div class="col-md-6">
 						<label>Password confirmation</label>
-    					<input type="password" required=required class="form-control" name="passowrdConfirmation"/>
+    					<input type="password" required=required class="form-control" name="passwordConfirmation"/>
 					</div>
 				</div>
 				 <button type="submit" class="btn btn-primary">Save &raquo;</button>

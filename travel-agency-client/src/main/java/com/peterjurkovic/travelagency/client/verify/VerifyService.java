@@ -46,6 +46,9 @@ public class VerifyService {
         } catch (IOException | NexmoClientException e) {
             log.error("Verifycation request of phone "+phone+" has faild", e);
             return Optional.empty();
+        }catch( Exception e){
+            log.error("Verifycation request of phone "+phone+" has faild", e);
+            return Optional.empty();
         }
         
     }

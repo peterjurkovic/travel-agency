@@ -66,10 +66,10 @@ public class DataPopulator implements CommandLineRunner{
         userRepository.deleteAll();
         String pass = passwordEncoder.encode("123456");
         
-        User peter = user("email"+ " @ " +"peterjurkovic.sk", pass  , "Peter" , "Jurkovic");
+        User peter = user("email"+ "@" +"peterjurkovic.sk", pass  , "Peter" , "Jurkovic");
         userRepository.save(peter);
         
-        User nicola = user("nicola.giacchetta"+ " @ " +"nexmo.com", pass  , "Peter" , "Jurkovic");
+        User nicola = user("nicola.giacchetta"+ "@" +"nexmo.com", pass  , "Peter" , "Jurkovic");
         userRepository.save(nicola);
         
         for(int i = 0; i < 20; i++)
@@ -82,6 +82,7 @@ public class DataPopulator implements CommandLineRunner{
         user.setPassword(pass);
         user.setFirstName(fistName);
         user.setLastName(lastName);
+        user.setPhone("447756738686");
         return user;
     }
     

@@ -20,6 +20,7 @@ import com.peterjurkovic.travelagency.common.model.User;
 import com.peterjurkovic.travelagency.common.repository.UserRepository;
 
 import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
 public class SignupFormValidatorTest {
@@ -56,6 +57,14 @@ public class SignupFormValidatorTest {
         validator.validate(form, errors);
         
         verifyZeroInteractions(errors);
+    }
+    
+    @Parameters({
+        
+    })
+    @Test
+    public void testValidNumbers(String number){
+        
     }
     
     

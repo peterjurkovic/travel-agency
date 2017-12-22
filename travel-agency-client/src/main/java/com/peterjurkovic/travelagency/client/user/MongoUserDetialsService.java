@@ -30,12 +30,12 @@ public class MongoUserDetialsService implements UserDetailsService {
         }
         if (log.isDebugEnabled())
             log.debug("Searching user by: {} ", username);
-        Optional<User> user = userRepository.findByEmail(username);
+        Optional<User> user = userRepository.findByEmail(username.trim());
         if (user.isPresent()) {
-            log.info("User found: {}" + user.get());
+            log.info("User found: {}",user.get());
             return new UserAdapter(user.get());
         }
-        log.info("User with username {} was not found" + user.get());
+        log.info("User with username {} was not found" + username);
         return null;
     }
 

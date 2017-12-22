@@ -5,6 +5,10 @@
 													   
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
+	
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 </head>
 <body>
 
@@ -37,15 +41,15 @@
            
            <ul class="nav navbar-nav navbar-right">
 				<li sec:authorize="${isAuthenticated()}">
-               		<a href="@{/logout}">Logout</a>
+               		<a href="/logout">Logout</a>
                </li>
                
                <li sec:authorize="${ ! isAuthenticated()}">
-               		<a href="@{/login}">Login</a>
+               		<a href="/login">Login</a>
                </li>
                
                <li sec:authorize="${ ! isAuthenticated()}">
-               		<a href="@{/sign-up}">Sign up</a>
+               		<a href="/sign-up">Sign up</a>
                </li>
 			</ul>
        </div>

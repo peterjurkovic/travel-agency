@@ -7,7 +7,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.google.i18n.phonenumbers.NumberParseException;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.peterjurkovic.travelagency.common.model.User;
 import com.peterjurkovic.travelagency.common.repository.UserRepository;
 import com.peterjurkovic.travelagency.common.utils.PhoneUtils;
