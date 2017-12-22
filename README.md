@@ -14,6 +14,8 @@ Travel Agency integrated flow with call center.
  
 
 ## Develompent setup
+
+### MongoDB setup
 Install MongoDB 3.6 [follow official doc](https://docs.mongodb.com/manual/installation/) and setup mongo enviroment
     
 ```
@@ -30,3 +32,9 @@ Install MongoDB 3.6 [follow official doc](https://docs.mongodb.com/manual/instal
 ```
  Set an env variable `SPRING_DATA_MONGODB_PASSWORD=YOUR_PASS`
     
+### Nexmo credentials configuration
+Set also following ENV variables
+ ```
+ NEXMO_API_KEY=<VALUE>
+ NEXMO_API_SECRET=<VALUE>
+ ```
