@@ -1,22 +1,41 @@
 
-
 subprojects {
-	apply plugin: 'java'	
+
+	apply plugin: 'java'
+	apply plugin: 'idea'
 	apply plugin: 'eclipse'
 	
-	version = '0.0.3-SNAPSHOT'
-	
+	version = '0.0.1-SNAPSHOT'
     group = 'com.peterjurkovic'
-    
- 	repositories {
+	sourceCompatibility = 1.8
+
+	buildscript {
+		ext {
+			springBootVersion = '2.0.0.M7'
+		}
+
+		repositories {
+			mavenCentral()
+			maven { url "https://repo.spring.io/snapshot" }
+			maven { url "https://repo.spring.io/milestone" }
+		}
+		dependencies {
+			classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		}
+
+	}
+
+	repositories {
 		jcenter()
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
 	}
 	
 	dependencies {
-		
+
 		compile ("org.slf4j:slf4j-api:1.7.21")
-    
-		
+
       	testCompile ('junit:junit:4.12')
 		testCompile ('pl.pragmatists:JUnitParams:1.0.6')
 		testCompile ('org.assertj:assertj-core:3.6.2')
@@ -26,18 +45,4 @@ subprojects {
 
 
 
-buildscript {
-	ext {
-		springBootVersion = '2.0.0.M7'
-	}
 
-   repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
-     
-}
