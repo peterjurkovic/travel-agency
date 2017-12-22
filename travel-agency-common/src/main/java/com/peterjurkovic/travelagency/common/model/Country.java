@@ -5,7 +5,8 @@ public enum Country {
     GB("United Kingdom"),
     CZ("Czechia"),
     US("United States"),
-    LK("Sri Lanka"),;
+    LK("Sri Lanka"),
+    IT("Italy");
 
     private final String countryName;
 
