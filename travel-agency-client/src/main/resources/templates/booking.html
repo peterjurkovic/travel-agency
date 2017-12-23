@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header-css">
+    <title th:inline="text">Booking - [(${trip.title})] Detail</title>
+</head>
+<body>
+	<nav th:replace="fragments/header :: header"/>
+
+  	<div class="container">
+		<div class="row">
+			<h1>Booking form</h1>
+			<form>
+			
+			</form>
+			
+		</div>
+      
+		
+		<hr />
+		
+		<div class="row" style="margin-top: 1.5em">
+			<div class="col-md-3">
+				<img class="img-responsive" th:src="${trip.avatarUrl}" alt="${trip.title}">
+			</div>
+			<div class="col-md-9" >
+				<h2 style="margin-top:0px" th:text="${trip.title}" >Title</h2>
+				<p style="margin: 1em 0;color: #555" th:text="${{trip.createdAt}}" class="row"></p>
+				<p th:text="${trip.description}">Trip description</p>
+			</div>
+		</div>
+        
+	</div>
+    
+	<footer th:include="fragments/footer :: footer" />
+</body>
+</html>
