@@ -1,5 +1,8 @@
 package com.peterjurkovic.travelagency.client.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +23,12 @@ public class WebConfiguration implements WebMvcConfigurer {
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             "classpath:/META-INF/resources/", "classpath:/resources/",
             "classpath:/static/", "classpath:/public/" };
+    
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
+    @Value("${client.security.twoFaEnabled}")
+    private boolean twoFaEnabeld;
+    
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
@@ -37,8 +45,13 @@ public class WebConfiguration implements WebMvcConfigurer {
     
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor( verifyInterceptorBean() )
-            .excludePathPatterns("/static/**", "/webjars/**", "/verify");
+        if(twoFaEnabeld){
+            log.info("2FA is ENABLED");
+            registry.addInterceptor( verifyInterceptorBean() )
+                .excludePathPatterns("/static/**", "/webjars/**", "/verify");
+        }else{
+            log.info("2FA is DISABLED");
+        }
      
     }
     
