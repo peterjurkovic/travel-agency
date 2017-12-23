@@ -9,12 +9,10 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import com.peterjurkovic.travelagency.common.model.User;
 
-import lombok.Data;
-
 
 @Component
 @SessionScope
-public @Data class VerifyAction {
+public class VerifyAction {
 
     private User user;
     private String requestId;
@@ -39,4 +37,21 @@ public @Data class VerifyAction {
         }
         return successRedirectUrl;
     }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setSuccessRedirectUrl(String successRedirectUrl) {
+        this.successRedirectUrl = successRedirectUrl;
+    }
+    
 }

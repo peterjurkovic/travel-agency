@@ -29,6 +29,7 @@ hs_err_pid*
 
 # Subproject
 travel-agency-admin/build/
+travel-agency-common/build/
 
 ### STS ###
 .apt_generated
