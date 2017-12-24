@@ -1,20 +1,80 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="fragments/header :: header-css">
-    <title th:inline="text">Booking - [(${trip.title})] Detail</title>
+<head th:replace="fragments/header :: header-css(~{::title},~{::link},~{::script})">
+    <title >Booking - [(${trip.title})] Detail</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js" ></script>
+    <script type="text/javascript" th:src="@{/static/js/booking.js}"></script> 
 </head>
 <body>
 	<nav th:replace="fragments/header :: header"/>
 
   	<div class="container">
-		<div class="row">
-			<h1>Booking form</h1>
-			<form>
+  	
+		<div class="row" sec:authorize="${isAuthenticated()}">
+			<h1>Booking of [(${trip.title})]</h1>
 			
+			<hr />
+	
+	
+		<div class="col-lg-7 col-md-8">
+			<form class="form-horizontal" method="post">
+			  <div class="form-group">
+			    <label for="tripDate" class="col-sm-3 control-label">Choose a date</label>
+			    <div class="col-sm-4">
+			    	<div class="input-group date">
+			    		<input type="text" class="form-control datepicker" name="tripDate" />
+			      		<span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-calendar"></span>
+    	                </span>
+    	            </div>
+			    </div>
+			    
+			  </div>
+			  <div class="form-group">
+			    	<label for="tripDate" class="col-sm-3 control-label">Duration</label>
+			    	<div class="col-sm-4">
+			    		<select name="days"class="form-control" >
+			    			<option value="7">7 Days</option>
+			    			<option value="10">10 Days</option>
+			    			<option value="14">14 Days</option>
+			    		</select>
+			    	</div>
+			  </div>
+			  
+			  <div class="form-group">
+			    	<label for="tripDate" class="col-sm-3 control-label">Number of persons</label>
+			    	<div class="col-sm-4">
+			    		<select name="persons"class="form-control" >
+			    			<option value="1">1 Person</option>
+			    			<option value="2">2 Persons</option>
+			    			<option value="3">3 Persons</option>
+			    			<option value="4">4 Persons</option>
+			    			<option value="5">5 Persons</option>
+			    		</select>
+			    	</div>
+			  </div>
+			  <div class="form-group">
+			    <div class="col-sm-offset-3 col-sm-10">
+			      <button type="submit" class="btn btn-success">
+			      Book it &raquo;
+			      </button>
+			    </div>
+			  </div>
 			</form>
+			</div>
+			
 			
 		</div>
-      
+      	
+      	<div class="row" sec:authorize="${ ! isAuthenticated()}">
+      		<h1>Booking - [(${trip.title})]</h1>
+			<div class="alert alert-info">
+				<span class="glyphicon glyphicon-alert"></span>
+				In order to make a booking please 
+				<strong><a href="/sign-up">Sign up</a></strong>
+			</div>
+		</div>
 		
 		<hr />
 		

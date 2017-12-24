@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="fragments/header :: header-css">
+<head th:replace="fragments/header :: header-css(~{::title},~{::link},~{::script})">
     <title>Welcome to TrawelWise</title>
 </head>
 <body>
