@@ -5,6 +5,8 @@ import java.time.Instant;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Document
 public class Booking {
@@ -13,7 +15,11 @@ public class Booking {
     
     @Id
     private String id;
+    
+    @DateTimeFormat(iso = ISO.DATE)
     private Instant tripDate;
+    
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     private Instant bookingDate = Instant.now(); 
     private int days;
     private int persons;

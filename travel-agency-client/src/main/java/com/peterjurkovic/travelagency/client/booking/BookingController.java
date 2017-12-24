@@ -1,5 +1,6 @@
 package com.peterjurkovic.travelagency.client.booking;
 
+import java.time.Instant;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -62,6 +63,7 @@ public class BookingController {
         Booking booking = form.asBooking( getTripOrThrow(id) );
         bookingService.placeBooking(booking);
         model.addAttribute("created", true);
+        model.put("booking", booking);
         return populateModel(id, model, form);
     }
     

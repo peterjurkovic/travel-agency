@@ -16,14 +16,48 @@
 			
 			<hr />
 	
+		<div th:if="${created != null}" class="col-lg-7 col-md-8">
+			<div class="alert alert-success" role="alert">
+				<span class="glyphicon glyphicon-ok"></span>
+				Your booking has been successfully placed.
+			</div>
+			
+			<table class="table">
+				<tr>
+					<td><strong>Booking reference</strong></td>
+					<td th:text="${booking.id}">123456</td>
+				</tr>
+				<tr>
+					<td><strong>Booking status</strong></td>
+					<td th:text="${booking.status}">PENDING</td>
+				</tr>
+				
+				<tr>
+					<td><strong>Trip date</strong></td>
+					<td th:text="${{booking.tripDate}}">2016-15-20</td>
+				</tr>
+				
+				<tr>
+					<td><strong>Number of persons</strong></td>
+					<td th:text="${booking.persons}">25</td>
+				</tr>
+				
+				<tr>
+					<td><strong>Trip length</strong></td>
+					<td th:text="${booking.days}">25</td>
+				</tr>
+			</table>
+			
+			<p>We will contact you soon to confirm you trip.</p>
+		</div>
 	
-		<div class="col-lg-7 col-md-8">
-			<form class="form-horizontal" method="post">
+		<div th:if="${ created == null }" class="col-lg-7 col-md-8">
+			<form class="form-horizontal" method="post" th:object="${bookingForm}" >
 			  <div class="form-group">
 			    <label for="tripDate" class="col-sm-3 control-label">Choose a date</label>
 			    <div class="col-sm-4">
 			    	<div class="input-group date">
-			    		<input type="text" class="form-control datepicker" name="tripDate" />
+			    		<input th:field="*{tripDate}" required="required" type="text" class="form-control datepicker" name="tripDate" />
 			      		<span class="input-group-addon">
 	                        <span class="glyphicon glyphicon-calendar"></span>
     	                </span>
@@ -34,7 +68,7 @@
 			  <div class="form-group">
 			    	<label for="tripDate" class="col-sm-3 control-label">Duration</label>
 			    	<div class="col-sm-4">
-			    		<select name="days"class="form-control" >
+			    		<select th:field="*{days}" required="required" name="days"class="form-control" >
 			    			<option value="7">7 Days</option>
 			    			<option value="10">10 Days</option>
 			    			<option value="14">14 Days</option>
@@ -45,7 +79,7 @@
 			  <div class="form-group">
 			    	<label for="tripDate" class="col-sm-3 control-label">Number of persons</label>
 			    	<div class="col-sm-4">
-			    		<select name="persons"class="form-control" >
+			    		<select th:field="*{persons}" required="required" name="persons"class="form-control" >
 			    			<option value="1">1 Person</option>
 			    			<option value="2">2 Persons</option>
 			    			<option value="3">3 Persons</option>

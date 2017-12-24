@@ -49,7 +49,7 @@ public class BookingForm {
     
     public Booking asBooking(Trip trip){
         Booking booking = new Booking();
-        booking.setBookingDate(tripDate);
+        booking.setTripDate(tripDate);
         booking.setDays(days);
         booking.setPersons(persons);
         booking.setTrip(Objects.requireNonNull(trip));
