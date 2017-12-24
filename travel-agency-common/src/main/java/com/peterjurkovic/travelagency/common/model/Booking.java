@@ -77,6 +77,10 @@ public class Booking {
     public void setStatus(BookingStatus status) {
         this.status = status;
     }
+    @Override
+    public String toString() {
+        return "Booking [id=" + id + ", tripDate=" + tripDate + ", bookingDate=" + bookingDate + ", days=" + days + ", persons=" + persons + "]";
+    }
     
     
     

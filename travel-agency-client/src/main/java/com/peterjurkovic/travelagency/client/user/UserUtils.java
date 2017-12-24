@@ -3,6 +3,7 @@ package com.peterjurkovic.travelagency.client.user;
 import java.util.Collections;
 import java.util.Optional;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -20,6 +21,16 @@ public class UserUtils {
             return Optional.of( ((UserAdapter) auth.getPrincipal() ).getUser());
         }
         return Optional.empty();
+    }
+    
+    public User getLoggedUserOrThrow(){
+        Optional<User> user = getLoggedUser();
+        
+        if(user.isPresent()){
+            return user.get();
+        }
+        
+        throw new AccessDeniedException("No logged user");
     }
     
     public Optional<TwoFaUserDetails> getLoggedUserDetails(){

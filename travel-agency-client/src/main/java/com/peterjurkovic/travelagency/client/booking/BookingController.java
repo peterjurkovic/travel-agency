@@ -1,6 +1,5 @@
 package com.peterjurkovic.travelagency.client.booking;
 
-import java.time.Instant;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -49,7 +48,11 @@ public class BookingController {
         return populateModel(id, model, new BookingForm());
     }
 
-   
+    @GetMapping({"/bookings", "/booking"})
+    public String myBookings(ModelMap model){
+        model.put("bookings", bookingService.getLoggedUserBookings());
+        return "bookings";
+    }
     
     @PostMapping("/booking/{id}")
     public String placeBooking(@PathVariable String id, ModelMap model, @Valid BookingForm form, BindingResult result){
