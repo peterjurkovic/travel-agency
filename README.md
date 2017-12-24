@@ -35,6 +35,6 @@ Install MongoDB 3.6 [follow official doc](https://docs.mongodb.com/manual/instal
 ### Nexmo credentials configuration
 Set also following ENV variables
  ```
- NEXMO_API_KEY=<VALUE>
- NEXMO_API_SECRET=<VALUE>
+ NEXMO_APIKEY=<VALUE>
+ NEXMO_APISECRET=<VALUE>
  ```
