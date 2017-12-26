@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      database: travelagency
+      username: travelagency
+
+server:
+  port: 8002
