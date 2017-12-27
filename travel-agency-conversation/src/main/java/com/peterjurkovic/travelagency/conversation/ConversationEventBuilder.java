@@ -25,7 +25,7 @@ import com.peterjurkovic.travelagency.conversation.ConversationEvent.Type;
         
         public ConversationEvent build() {
             ConversationEvent event =  new ConversationEvent(type);
-            event.setPayload(payloadBuilder.build());
+            // fix me event.setPayload(new Payload(properties));
             return event;
         }
 

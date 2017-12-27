@@ -1,6 +1,5 @@
 package com.peterjurkovic.travelagency.conversation;
 
-import static codes.monkey.reactivechat.Event.Type.USER_LEFT;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -11,7 +10,6 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 
 import com.peterjurkovic.travelagency.common.utils.JsonUtils;
 
-import codes.monkey.reactivechat.Event;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.UnicastProcessor;
@@ -28,11 +26,13 @@ public class ConversationWebSocketHandler implements WebSocketHandler{
     
     @Override
     public Mono<Void> handle(WebSocketSession session) {
+        WebSocketMessageSubscriber subscriber = new WebSocketMessageSubscriber(eventPublisher);
         session.receive()
             .map(WebSocketMessage::getPayloadAsText)
             .map(ConversationWebSocketHandler::toEvent)
-            .subscribe(null, null);
-        return null;
+            .subscribe(subscriber::onNext, subscriber::onError, subscriber::onComplete);
+        
+        return session.send(outputEvents.map(session::textMessage));
     }
 
     
@@ -55,16 +55,15 @@ public class ConversationWebSocketHandler implements WebSocketHandler{
         }
 
         public void onError(Throwable error) {
-            //TODO log error
             error.printStackTrace();
         }
 
         public void onComplete() {
 
             lastReceivedEvent.ifPresent(event -> eventPublisher.onNext(
-                    ConversationEvent.type(ConversationEvent.Type.USER_LEFT)
-
-                            .build()));
+                    ConversationEventBuilder.type(ConversationEvent.Type.USER_LEFT)
+                            .build()
+                            ));
         }
 
     }

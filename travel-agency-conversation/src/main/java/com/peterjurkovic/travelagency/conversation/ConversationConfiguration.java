@@ -33,6 +33,7 @@ public class ConversationConfiguration {
         map.put("/websocket/conversation", new ConversationWebSocketHandler(eventPublisher, events));
         SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
         simpleUrlHandlerMapping.setUrlMap(map);
+//        simpleUrlHandlerMapping.setCorsProcessor(corsProcessor);
 
         //Without the order things break :-/
         simpleUrlHandlerMapping.setOrder(10);
