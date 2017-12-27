@@ -11,13 +11,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Conversation {
 
+    public enum Status {ACTIVE, ARCHIVED}
+    
     @Id 
     private String id;
     private Instant date = Instant.now();
+    private Status status = Status.ACTIVE;
     
     @Indexed
-    private List<Participant> participants = new ArrayList<>();
+    private List<Participant> participants = new ArrayList<>(4);
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;
@@ -43,7 +53,14 @@ public class Conversation {
         this.participants = participants;
     }
 
-    
-    
+    public void addParticipant(Participant participant){
+        this.participants.add(participant);
+    }
 
+    @Override
+    public String toString() {
+        return "Conversation [id=" + id + ", date=" + date + ", participants=" + participants + "]";
+    }
+    
+    
 }

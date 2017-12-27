@@ -44,6 +44,11 @@ public class Participant {
         return true;
     }
 
-    
+    public static Participant user(String id){
+        Participant participant = new Participant();
+        participant.setType(Type.USER);
+        participant.setNickname(id);
+        return participant;
+    }
 }
 
