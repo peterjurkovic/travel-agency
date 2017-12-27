@@ -1,5 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:fragment="header-css">
+<head th:fragment="header-css(title,links,scripts)" >
+	<title th:replace="${title}">TravelWise</title>
   	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 													   
@@ -9,6 +10,13 @@
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/static/js/main.js}"></script>
+	
+	<th:block th:if="${links != null}">
+		<th:block th:replace="${links}" />
+	</th:block>
+	<th:block th:if="${scripts != null}">
+		<th:block th:replace="${scripts}" />
+	</th:block>
 </head>
 <body>
 
@@ -23,7 +31,7 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
            </button>
-           <a class="navbar-brand" href="#">TravelWise</a>
+           <a class="navbar-brand" href="/">TravelWise</a>
        </div>
        <!-- Collect the nav links, forms, and other content for toggling -->
        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -32,7 +40,7 @@
                    <a href="/">Trips</a>
                </li>
                <li>
-                   <a href="#">Services</a>
+                   <a href="/bookings">My bookings</a>
                </li>
                <li>
                    <a href="#">Contact</a>

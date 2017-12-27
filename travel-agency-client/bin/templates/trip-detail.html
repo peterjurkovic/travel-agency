@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="fragments/header :: header-css">
+<head th:replace="fragments/header :: header-css(~{::title},~{::link},~{::script})">
     <title th:text="${trip.title}">Trip Detail</title>
 </head>
 <body>
@@ -18,6 +18,7 @@
 				<h1 style="margin-top:0px" th:text="${trip.title}" >Title</h1>
 				<p style="margin: 1em 0;color: #555" th:text="${{trip.createdAt}}" class="row"></p>
 				<p th:text="${trip.description}">Trip description</p>
+				<a th:href="|/booking/${trip.id}|"  class="btn btn-success">Book it &raquo;</a>
 			</div>
 		</div>
 		
@@ -25,6 +26,10 @@
 		
 		<div class="row">
 			<h3>Some details about destination</h3>
+			<div class="alert alert-warning" role="alert">
+				An amazing experience guaranteed! 
+			</div>
+				
 			<p th:text="${trip.content}">Content</p>
 		</div>
         

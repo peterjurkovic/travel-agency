@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
->
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css(~{::title},~{::link},~{::script})">
     <title>Two factor authentication</title>
-    <div th:replace="fragments/header :: header-css"/>
     <script type="text/javascript" th:src="@{/static/js/verify.js}"></script>
 </head>
 <body>

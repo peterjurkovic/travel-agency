@@ -12,3 +12,8 @@ server:
   
 company:
   name: TravelWise  
+  
+client:
+  security:
+    twoFaEnabled: false 
+    

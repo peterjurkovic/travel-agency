@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css(~{::title},~{::link},~{::script})">
+    <title >Booking - [(${trip.title})] Detail</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js" ></script>
+    <script type="text/javascript" th:src="@{/static/js/booking.js}"></script> 
+</head>
+<body>
+	<nav th:replace="fragments/header :: header"/>
+
+  	<div class="container">
+  	
+		<div class="row" sec:authorize="${isAuthenticated()}">
+			<h1>Booking of [(${trip.title})]</h1>
+			
+			<hr />
+	
+		<div th:if="${created != null}" class="col-lg-7 col-md-8">
+			<div class="alert alert-success" role="alert">
+				<span class="glyphicon glyphicon-ok"></span>
+				Your booking has been successfully placed.
+			</div>
+			
+			<table class="table">
+				<tr>
+					<td><strong>Booking reference</strong></td>
+					<td th:text="${booking.id}">123456</td>
+				</tr>
+				<tr>
+					<td><strong>Booking status</strong></td>
+					<td th:text="${booking.status}">PENDING</td>
+				</tr>
+				
+				<tr>
+					<td><strong>Trip date</strong></td>
+					<td th:text="${{booking.tripDate}}">2016-15-20</td>
+				</tr>
+				
+				<tr>
+					<td><strong>Number of persons</strong></td>
+					<td th:text="${booking.persons}">25</td>
+				</tr>
+				
+				<tr>
+					<td><strong>Trip length</strong></td>
+					<td th:text="${booking.days}">25</td>
+				</tr>
+			</table>
+			
+			<p>We will contact you soon to confirm you trip.</p>
+		</div>
+	
+		<div th:if="${ created == null }" class="col-lg-7 col-md-8">
+			<form class="form-horizontal" method="post" th:object="${bookingForm}" >
+			  <div class="form-group">
+			    <label for="tripDate" class="col-sm-3 control-label">Choose a date</label>
+			    <div class="col-sm-4">
+			    	<div class="input-group date">
+			    		<input th:field="*{tripDate}" required="required" type="text" class="form-control datepicker" name="tripDate" />
+			      		<span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-calendar"></span>
+    	                </span>
+    	            </div>
+			    </div>
+			    
+			  </div>
+			  <div class="form-group">
+			    	<label for="tripDate" class="col-sm-3 control-label">Duration</label>
+			    	<div class="col-sm-4">
+			    		<select th:field="*{days}" required="required" name="days"class="form-control" >
+			    			<option value="7">7 Days</option>
+			    			<option value="10">10 Days</option>
+			    			<option value="14">14 Days</option>
+			    		</select>
+			    	</div>
+			  </div>
+			  
+			  <div class="form-group">
+			    	<label for="tripDate" class="col-sm-3 control-label">Number of persons</label>
+			    	<div class="col-sm-4">
+			    		<select th:field="*{persons}" required="required" name="persons"class="form-control" >
+			    			<option value="1">1 Person</option>
+			    			<option value="2">2 Persons</option>
+			    			<option value="3">3 Persons</option>
+			    			<option value="4">4 Persons</option>
+			    			<option value="5">5 Persons</option>
+			    		</select>
+			    	</div>
+			  </div>
+			  <div class="form-group">
+			    <div class="col-sm-offset-3 col-sm-10">
+			      <button type="submit" class="btn btn-success">
+			      Book it &raquo;
+			      </button>
+			    </div>
+			  </div>
+			</form>
+			</div>
+			
+			
+		</div>
+      	
+      	<div class="row" sec:authorize="${ ! isAuthenticated()}">
+      		<h1>Booking - [(${trip.title})]</h1>
+			<div class="alert alert-info">
+				<span class="glyphicon glyphicon-alert"></span> 
+				&nbsp; In order to make a booking please 
+				<strong><a href="/login">login</a></strong> or <strong><a href="/sign-up">sign up</a></strong>
+			</div>
+		</div>
+		
+		<hr />
+		
+		<div class="row" style="margin-top: 1.5em">
+			<div class="col-md-3">
+				<img class="img-responsive" th:src="${trip.avatarUrl}" alt="${trip.title}">
+			</div>
+			<div class="col-md-9" >
+				<h2 style="margin-top:0px" th:text="${trip.title}" >Title</h2>
+				<p style="margin: 1em 0;color: #555" th:text="${{trip.createdAt}}" class="row"></p>
+				<p th:text="${trip.description}">Trip description</p>
+			</div>
+		</div>
+        
+	</div>
+    
+	<footer th:include="fragments/footer :: footer" />
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css(~{::title},~{::link},~{::script})">
+    <title >My bookings</title>
+     
+</head>
+<body>
+	<nav th:replace="fragments/header :: header"/>
+
+  	<div class="container">
+  	
+		
+	<h1>My bookings</h1>
+	<hr />
+	    
+	 <div class="row" th:each="booking : ${bookings}" style="background:#fafafa">
+	 	<div class="container">
+		 	<h2>Destination: [[${booking.trip.title}]]</h2>
+		 	<table class="table">
+					<tr>
+						<td><strong>Booking reference</strong></td>
+						<td th:text="${booking.id}">123456</td>
+					</tr>
+					<tr>
+						<td><strong>Booking status</strong></td>
+						<td th:text="${booking.status}">PENDING</td>
+					</tr>
+					
+					<tr>
+						<td><strong>Trip date</strong></td>
+						<td th:text="${{booking.tripDate}}">2016-15-20</td>
+					</tr>
+					<tr>
+						<td><strong>Booking date</strong></td>
+						<td th:text="${{booking.bookingDate}}">2016-15-20</td>
+					</tr>
+					<tr>
+						<td><strong>Number of persons</strong></td>
+						<td th:text="${booking.persons}">25</td>
+					</tr>
+					
+					<tr>
+						<td><strong>Trip length</strong></td>
+						<td th:text="${booking.days}">25</td>
+					</tr>
+				</table>
+			</div>
+	 </div>   
+	 
+	</div>
+    
+	<footer th:include="fragments/footer :: footer" />
+</body>
+</html>
