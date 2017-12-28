@@ -1,21 +1,16 @@
 package com.peterjurkovic.travelagency.conversation.web;
 
-import java.security.Principal;
-import java.util.Collection;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,13 +44,16 @@ public class ConversationController {
         return conversation;
     }
     
-    @MessageMapping("/chat.message")
-    public void createMesage(Message<ConversationMessage>  message) {
-        String destination = "/chat.message." + message.getPayload().getConversationId();
-        log.info("handleMessage {} / {}",destination,  message.getPayload());
+  
+    @MessageMapping("/chat/{conversationId}")
+    @SendTo("/topic/chat/{conversationId}")
+    public ConversationMessage createMesage(
+            @Payload ConversationMessage message,
+            @DestinationVariable String conversationId) {
+
+        log.info("handleMessage {}", message);
         
-        simpMessagingTemplate.convertAndSend(destination, "{\"a\":\"a\"}");
-        
+        return message;
     }
     
 }

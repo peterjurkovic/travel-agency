@@ -11,7 +11,6 @@ dependencies {
 	
 	
 	compile 'org.webjars:bootstrap:3.3.7'
-	compile 'org.webjars:vue:2.5.3-1'
 	compile 'org.webjars:jquery:3.2.1'
 	compile 'com.thedeanda:lorem:2.1'
 	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE'
