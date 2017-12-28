@@ -6,21 +6,28 @@ $(function(){
 
 
 
-var msgTemplate = function(){
-		<li class="left clearfix"><span class="chat-img pull-left">
-	    <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-	</span>
-	    <div class="chat-body clearfix">
-	        <div class="header">
-	            <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-	                <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-	        </div>
-	        <p>
-	            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-	            dolor, quis ullamcorper ligula sodales.
-	        </p>
-	    </div>
-	</li>
+var msgTemplate = function(name, time, text, isAgent){
+	return '<li class="left clearfix">'+
+				+ avatar(isAgent) +
+			    '<div class="chat-body clearfix">'+
+			        '<div class="header">'+
+			            '<strong class="primary-font">'+name+'</strong> <small class="pull-right text-muted">'+
+			                '<span class="glyphicon glyphicon-time"></span>'+time_ago(time)+'</small>'+
+			        '</div>'+
+			        '<p>'+ text + '</p>'+
+			    '</div>'+
+			'</li>';
+	
+	function avatar(isAgent){
+		var avatar = { id : '55C1E7', pos : 'left' };
+		if(isAgent){
+			avatar = { id : 'FA6F57', pos : 'right' };
+		}
+		return  '<span class="chat-img pull-'+avatar.pos+'">'+
+				'<img src="http://placehold.it/50/'+avatar.id+'/fff&text=U" alt="User Avatar" class="img-circle" />'+
+				'</span>';
+		
+	}
 }
 
 
