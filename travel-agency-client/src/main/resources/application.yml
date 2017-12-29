@@ -16,4 +16,6 @@ company:
 client:
   security:
     twoFaEnabled: false 
-    
+
+voice:
+  answerUrl: http://www.nicolagiacchetta.it/travel/ncco.json
