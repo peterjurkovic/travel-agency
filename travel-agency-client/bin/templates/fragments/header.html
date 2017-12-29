@@ -6,9 +6,12 @@
 													   
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/chat.css}" />
 	
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 	
 	<th:block th:if="${links != null}">
