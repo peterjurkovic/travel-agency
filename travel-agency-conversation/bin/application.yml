@@ -9,4 +9,5 @@ server:
   
 logging:
   level:
-    org.springframework.web: TRACE
+    org.springframework.web: DEBUG
+    com.peterjurkovic.travelagency: DEBUG

@@ -33,6 +33,25 @@
 {
     margin-right: 5px;
 }
+.chat .chat-img{
+    background: #7fefd3;    
+    display:inline-block;
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    padding-top: 12px;
+    padding-left: 16px;
+    font-size:1.3em;
+    border-radius:50%;
+}
+
+.chat .chat-img.pull-left{
+    background: #b3b2ff;
+}
+.chat .chat-img.pull-right{
+    background: #7fefd3;
+}
+
 
 .panel-body
 {
