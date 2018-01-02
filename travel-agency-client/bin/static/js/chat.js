@@ -1,20 +1,20 @@
 $(function(){
 	var host = 'http://localhost:8002';
 	var chat = $('#chat-wrapp');
-	chat.hide()
-	if ( conversationSession.exists() ){;
-		loadLastMessages(host);	
-		openChat(host);
-	}else{
-		setTimeout(function(){
+	
+	
+	function initChat(){
+		if ( conversationSession.exists() ){;
+			loadLastMessages(host);	
+			openChat(host);
+		}else{
+		
 			$.postJSON(host + '/conversations', {})
 				.done(function(conversation){
-						console.log(conversation);
-						conversationSession.init( conversation );
-						openChat(host);
-					});
-		}, 3000);		
-	
+					conversationSession.init( conversation );
+					openChat(host);
+				});
+		}
 	}
 	
 	
@@ -22,6 +22,7 @@ $(function(){
 	function loadLastMessages(host){
 		var conversationId = conversationSession.getConversationId();
 		console.log('Loading messages: ' + conversationId);
+		$('ul.chat').html('<li style="margin: 100px;border: none"><img alt="" src="/static/img/loader.gif"><span style="padding:5px;">Loading...</span></li>');
 		$.getJSON(host + '/conversations/' + conversationId + "/messages" )
 			.done(function(messages){
 				if(messages){
@@ -29,11 +30,42 @@ $(function(){
 					for(var i = 0; i < messages.length; i++){
 						html += renderMessage( messages[i] );
 					}
+					$('ul.chat').html('');
 					appendMessage(html);
 				}
 			});
 	}
+	
+	function refreshVisibilityChat(){
+		var state = conversationSession.isChatHidden() ? 'hide' : 'show',
+			btn = $('#chat-wrapp .toggle-btn');
+		$('#collapseOne').collapse(state);
+		if(!conversationSession.isChatHidden()){
+			btn.removeClass('glyphicon-chevron-up')
+				.addClass('glyphicon-chevron-down');
+		}else{
+			btn.removeClass('glyphicon-chevron-down')
+				.addClass('glyphicon-chevron-up');
+		}
+	}
+	
+	$('#collapseOne').on('hidden.bs.collapse', function () {
+		conversationSession.markChatHidden();
+		refreshVisibilityChat();
+		console.log('hidden.bs.collapse');
+	});
+	$('#collapseOne').on('shown.bs.collapse', function () {
+		if(!chat.data('init')){
+			initChat();
+			chat.data('init', true);
+		}
+		conversationSession.markChatVisible();
+		refreshVisibilityChat();
+		console.log('shown.bs.collapse');
+	});
+	
 	initTimeRefresher();
+	refreshVisibilityChat();
 });
 
 function appendMessage(message){
@@ -56,9 +88,7 @@ function connect(host){
 
 		
 		stompClient.subscribe("/topic/chat/"+conversationId, function(message) {
-							
 			var body = $.parseJSON(message.body);
-			console.log('Message arrieved: ' , body);
 			appendMessage(renderMessage(body));
 		});
 		
@@ -140,7 +170,8 @@ function initTimeRefresher(){
 
 var conversationSession = (function(){
 	var cid_key = '__cid',
-		pid_key = '__pid';
+		pid_key = '__pid',
+		chat_key = '__chat';
 	
 	var exists = function(){
 		return sessionStorage.getItem(cid_key) !== null;
@@ -155,6 +186,15 @@ var conversationSession = (function(){
 	getParticipantId = function(){
 		return sessionStorage.getItem(pid_key);
 	},
+	markChatHidden = function(){
+		return sessionStorage.removeItem(chat_key);
+	},
+	markChatVisible = function(){
+		return sessionStorage.setItem(chat_key, '1');
+	},
+	isChatHidden = function(){
+		return sessionStorage.getItem(chat_key) === null;
+	},
 	destroy = function(){
 		sessionStorage.removeItem(cid_key);
 		sessionStorage.removeItem(pid_key);
@@ -164,6 +204,9 @@ var conversationSession = (function(){
 		init : init,
 		getConversationId : getConversationId,
 		getParticipantId : getParticipantId,
+		markChatHidden : markChatHidden,
+		markChatVisible : markChatVisible,
+		isChatHidden : isChatHidden,
 		destroy : destroy
 	}
 	
