@@ -90,6 +90,15 @@ public class ConversationMessage {
     public void setCreated(Instant created) {
         this.created = created;
     }
+    
+    @Transient
+    public boolean isUserMessage(){
+        Participant participant = getParticipant();
+        if(participant != null && participant.isUser()){
+            return true;
+        }
+        return false;
+    }
 
     @Transient
     public Participant getParticipant(){

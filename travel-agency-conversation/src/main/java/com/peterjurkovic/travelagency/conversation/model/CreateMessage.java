@@ -6,10 +6,17 @@ import com.peterjurkovic.travelagency.common.model.ConversationMessage;
 public class CreateMessage {
 
 
-    private String user;
     private String content;
     private String conversationId;
     private String participantId;
+
+    public CreateMessage(){}
+    
+    public CreateMessage(String content, String conversationId, String participantId) {
+        this.content = content;
+        this.conversationId = conversationId;
+        this.participantId = participantId;
+    }
 
     public String getConversationId() {
         return conversationId;
@@ -27,15 +34,6 @@ public class CreateMessage {
         this.content = content;
     }
     
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-    
     public String getParticipantId() {
         return participantId;
     }
@@ -46,7 +44,7 @@ public class CreateMessage {
 
     @Override
     public String toString() {
-        return "ConversationMessage [user=" + user + ", content=" + content + ", conversationId=" + conversationId + "]";
+        return "ConversationMessage [content=" + content + ", conversationId=" + conversationId + "]";
     }
     
     public ConversationMessage toConversationMessage(Conversation conversation){

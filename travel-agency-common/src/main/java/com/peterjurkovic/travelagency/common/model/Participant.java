@@ -1,5 +1,6 @@
 package com.peterjurkovic.travelagency.common.model;
 
+import org.springframework.data.annotation.Transient;
 
 public class Participant {
 
@@ -27,6 +28,17 @@ public class Participant {
     public void setType(ParticipantType type) {
         this.type = type;
     }
+    
+    @Transient
+    public boolean isBot(){
+       return this.type == ParticipantType.BOT;
+    }
+    
+    @Transient
+    public boolean isUser(){
+       return this.type == ParticipantType.USER;
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;

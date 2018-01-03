@@ -37,6 +37,10 @@ public class ConversationService {
     
     public List<ConversationMessage> getMessages(String conversatinoId, Instant createdBefore){
         Conversation conversation = getConversation(conversatinoId);
+        return getMessages(conversation, createdBefore);
+    }
+    
+    public List<ConversationMessage> getMessages(Conversation conversation, Instant createdBefore){
         Pageable pageable = PageRequest.of(0, 15, Direction.ASC, "created");
         Page<ConversationMessage> page = conversationMessageRepository.findByConversationAndCreatedBefore(conversation, createdBefore, pageable);
         page.getContent().forEach( msg -> msg.setConversation(conversation));

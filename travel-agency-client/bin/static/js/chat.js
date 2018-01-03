@@ -83,14 +83,17 @@ function connect(host){
 	var socket = new SockJS(host + '/ws');
 	var stompClient = Stomp.over(socket);
 	var conversationId = conversationSession.getConversationId();
-	stompClient.connect( {}, function(frame) {
+	var participantId = conversationSession.getParticipantId();
+	var headers = { participantId : participantId };
+	
+	stompClient.connect( headers, function(frame) {
 		console.log('connected', frame);
 
 		
 		stompClient.subscribe("/topic/chat/"+conversationId, function(message) {
 			var body = $.parseJSON(message.body);
 			appendMessage(renderMessage(body));
-		});
+		}, headers);
 		
 	} );
 	
@@ -134,7 +137,7 @@ function connect(host){
 var renderMessage = function(message){
 	var isAgent = message.participant.type !== 'USER',
 		time = message.created,
-		name = message.participant.type == 'USER' ? 'You' : 'Agent';
+		name = message.participant.type == 'USER' ? 'You' : message.participant.name;
 	
 	return '<li class="'+(isAgent ? 'right' : 'left')+' clearfix" data-time="'+time+'">'
 				+ avatar(isAgent, name) +

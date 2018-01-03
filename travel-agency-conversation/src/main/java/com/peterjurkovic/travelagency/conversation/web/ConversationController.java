@@ -12,6 +12,8 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +34,12 @@ import com.peterjurkovic.travelagency.conversation.service.ConversationService;
 public class ConversationController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
-    
-     
+         
     @Autowired
     private ConversationService conversationService; 
+    
+    @Autowired 
+    private SimpMessagingTemplate messagingTemplate;
     
     @PostMapping("/conversations")
     @ResponseBody
@@ -67,7 +71,21 @@ public class ConversationController {
 
         log.info("handleMessage {}", message);
         
-        return conversationService.create(message);
+        ConversationMessage conversationMessage = conversationService.create(message);
+//        if(conversationMessage.isUserMessage()){
+//            messagingTemplate.convertAndSend("/topic/bot/{conversationId}/bot", conversationMessage);
+//        }
+        return conversationMessage;
     }
+    
+    @SubscribeMapping("/topic/chat/{conversationId}")
+    public void handleUserMessages(
+            @Payload ConversationMessage message,
+            @DestinationVariable String conversationId){
+        
+        log.info("User Message {}", message);
+        
+    }
+    
     
 }
