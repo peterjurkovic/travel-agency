@@ -8,6 +8,7 @@ public class Participant {
     
     private String id;
     private String name;
+    private String phoneNumber;
     private ParticipantType type;
         
     public String getId() {
@@ -29,6 +30,12 @@ public class Participant {
         this.type = type;
     }
     
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
     @Transient
     public boolean isBot(){
        return this.type == ParticipantType.BOT;
@@ -37,6 +44,11 @@ public class Participant {
     @Transient
     public boolean isUser(){
        return this.type == ParticipantType.USER;
+    }
+    
+    @Transient
+    public boolean isAgent(){
+        return this.type == ParticipantType.AGENT;
     }
     
     @Override

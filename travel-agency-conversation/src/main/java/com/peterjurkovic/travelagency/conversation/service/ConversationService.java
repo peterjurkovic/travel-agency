@@ -40,6 +40,10 @@ public class ConversationService {
         return getMessages(conversation, createdBefore);
     }
     
+    public List<ConversationMessage> getLastMessages(Conversation conversation){
+        return getMessages(conversation, Instant.now() );
+    }
+    
     public List<ConversationMessage> getMessages(Conversation conversation, Instant createdBefore){
         Pageable pageable = PageRequest.of(0, 15, Direction.ASC, "created");
         Page<ConversationMessage> page = conversationMessageRepository.findByConversationAndCreatedBefore(conversation, createdBefore, pageable);

@@ -99,6 +99,15 @@ public class ConversationMessage {
         }
         return false;
     }
+    
+    @Transient
+    public boolean isBotMessage(){
+        Participant participant = getParticipant();
+        if(participant != null && participant.isBot()){
+            return true;
+        }
+        return false;
+    }
 
     @Transient
     public Participant getParticipant(){

@@ -13,7 +13,14 @@ public class MessageBuilder {
     enum MessageType{
         PHONE_NUMBER_REQUEST(
                 "Hi there! Please provider your phone number in international "+
-                " format (e.g. +447702132132) if you lose your connection we will text you.");
+                " format (e.g. +447702132132) if you lose your connection we will text you."),
+        
+        PHONE_NUMBER_SAVED(
+                "Cool, I'll text you on {phoneNumber} once you disconnect ;)"),
+        
+        PHONE_NUMBER_INVALID("Sorry, but it looks like it is not a valid phone number"),
+        
+        PHONE_NUMBER_REQUEST_FAILED("Sorry, but I'am not able read your number. Please wait for an agent.");
         
         private final String content;
 
@@ -34,6 +41,11 @@ public class MessageBuilder {
     
     public MessageBuilder withContent(String content){
         this.content = content;
+        return this;
+    }
+    
+    public MessageBuilder replace(String variableName, String replacement){
+        this.content = this.content.replaceAll("\\{"+variableName+"\\}", replacement);
         return this;
     }
     

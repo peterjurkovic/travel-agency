@@ -13,7 +13,8 @@ import com.peterjurkovic.travelagency.common.repository.ConversationRepository;
 @Component
 public class ConversationUtils {
 
-   
+    
+    
     
     @Autowired
     private ConversationRepository conversationRepository;
@@ -34,6 +35,9 @@ public class ConversationUtils {
         }
         return Optional.empty();
     }
+    
+    
+    
     
     
 }

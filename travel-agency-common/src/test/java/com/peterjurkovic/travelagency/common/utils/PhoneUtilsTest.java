@@ -2,6 +2,8 @@ package com.peterjurkovic.travelagency.common.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -64,5 +66,18 @@ public class PhoneUtilsTest {
         String actual = PhoneUtils.toInternationalFormat(number);
         
         assertThat(actual).isEqualTo(expected);
+    }
+    
+    @Parameters({
+        "a +421904938419 a    | 421904938419   ",
+        " +3906123456         | 3906123456     ",
+        "My number is +4407756738685   | 447756738685  ",
+    })
+    @Test
+    public void testExtractPhoneNumber_shouldBeExtracted(String message, String expectedNumber){
+        
+        Optional<String> actualNumber = PhoneUtils.extractPhoneNumber(message);
+        
+        assertThat(actualNumber.get()).isEqualTo(expectedNumber);
     }
 }

@@ -4,10 +4,12 @@ import java.time.Instant;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.xml.ws.Action;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -25,8 +27,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peterjurkovic.travelagency.common.model.Conversation;
 import com.peterjurkovic.travelagency.common.model.ConversationMessage;
+import com.peterjurkovic.travelagency.conversation.event.UserMessageCreatedEvent;
 import com.peterjurkovic.travelagency.conversation.model.CreateMessage;
 import com.peterjurkovic.travelagency.conversation.model.IniciateConversationRequest;
+import com.peterjurkovic.travelagency.conversation.model.UserMessage;
 import com.peterjurkovic.travelagency.conversation.service.ConversationService;
 
 @CrossOrigin
@@ -38,8 +42,11 @@ public class ConversationController {
     @Autowired
     private ConversationService conversationService; 
     
-    @Autowired 
-    private SimpMessagingTemplate messagingTemplate;
+//    @Autowired 
+//    private SimpMessagingTemplate messagingTemplate;
+//    
+    @Autowired
+    private ApplicationEventPublisher publisher;
     
     @PostMapping("/conversations")
     @ResponseBody
@@ -71,21 +78,23 @@ public class ConversationController {
 
         log.info("handleMessage {}", message);
         
-        ConversationMessage conversationMessage = conversationService.create(message);
-//        if(conversationMessage.isUserMessage()){
-//            messagingTemplate.convertAndSend("/topic/bot/{conversationId}/bot", conversationMessage);
-//        }
+        
+        ConversationMessage conversationMessage = conversationService.create( message );
+        if(conversationMessage.isUserMessage()){
+            publisher.publishEvent(new UserMessageCreatedEvent(conversationMessage));
+        }
         return conversationMessage;
     }
     
-    @SubscribeMapping("/topic/chat/{conversationId}")
-    public void handleUserMessages(
-            @Payload ConversationMessage message,
-            @DestinationVariable String conversationId){
-        
-        log.info("User Message {}", message);
-        
-    }
+    
+//    @MessageMapping("/bot/{conversationId}")
+//    public void handleUserMessage( @Payload UserMessage  message,
+//            @DestinationVariable String conversationId){
+//        
+//        log.info("User message {}", conversationId);
+//    }
+    
+    
     
     
 }

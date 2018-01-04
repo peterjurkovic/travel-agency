@@ -22,6 +22,7 @@ public class Conversation {
     private Instant date = Instant.now();
     private String phoneNumber;
     private Status status = Status.ACTIVE;
+    private int numberRequests;
     
     @Indexed
     private List<Participant> participants = new ArrayList<>(4);
@@ -62,7 +63,15 @@ public class Conversation {
         this.participants.add(participant);
     }
 
-    
+           
+    public int getNumberRequests() {
+        return numberRequests;
+    }
+
+    public void setNumberRequests(int numberRequests) {
+        this.numberRequests = numberRequests;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -79,8 +88,19 @@ public class Conversation {
     }
     
     @Transient
+    public Optional<Participant> findParticipantByType(ParticipantType type){
+        return participants.stream()
+                .filter( p -> p.getType() == type)
+                .findFirst();
+    }
+    
+    @Transient
     public boolean hasPhoneNumberAssigned(){
         return StringUtils.hasText(this.phoneNumber);
+    }
+    @Transient
+    public void incrementNumberInquires(){
+        this.numberRequests++;
     }
     
     @Override
@@ -103,6 +123,15 @@ public class Conversation {
     }
     
     @Transient
+    public void setUserPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+        Optional<Participant> user = findParticipantByType(ParticipantType.USER);
+        if(user.isPresent()){
+            user.get().setPhoneNumber(phoneNumber);
+        }
+    }
+    
+    @Transient
     public Participant assignBot(){
         if(hasAssignedBot()){
            return getBot().get();
@@ -114,5 +143,11 @@ public class Conversation {
         bot.setId(UUID.randomUUID().toString());
         participants.add(bot);
         return bot;
+    }
+    
+    public boolean agentHasNotJoined(){
+        return this.participants.stream()
+                .filter(Participant::isAgent)
+                .count() == 0;
     }
 }
