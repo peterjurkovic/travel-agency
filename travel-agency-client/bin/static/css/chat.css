@@ -14,12 +14,12 @@
 
 .chat li.left .chat-body
 {
-    margin-left: 60px;
+    margin-left: 30px;
 }
 
 .chat li.right .chat-body
 {
-    margin-right: 60px;
+    margin-right: 30px;
 }
 
 
@@ -33,6 +33,24 @@
 {
     margin-right: 5px;
 }
+.chat .chat-img{
+    background: #7fefd3;    
+    display:inline-block;
+    width: 20px;
+    height: 20px;
+    padding-top: 3px;
+    padding-left: 5px;
+    font-size:.7em;
+    border-radius:50%;
+}
+
+.chat .chat-img.pull-left{
+    background: #b3b2ff;
+}
+.chat .chat-img.pull-right{
+    background: #7fefd3;
+}
+
 
 .panel-body
 {
