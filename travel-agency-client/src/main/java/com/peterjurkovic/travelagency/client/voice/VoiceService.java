@@ -30,11 +30,15 @@ public class VoiceService {
         this.configuration = configuration;
     }
 
+    public CallEvent callAgent(String from) throws IOException, NexmoClientException {
+        return createCall(configuration.getAgentNumber(), from);
+    }
+
     public CallEvent createCall(String to, String from) throws IOException, NexmoClientException {
-        LOGGER.debug("Creating createCall [to={}, from={}]...", to, from);
+        LOGGER.debug("Creating call [to={}, from={}]...", to, from);
         Call call = new Call(to, from, configuration.getAnswerUrl());
         CallEvent event = this.nexmoClient.getVoiceClient().createCall(call);
-        LOGGER.debug("...createCall [to={}, from={}] created with uuid={}", to, from, event.getUuid());
+        LOGGER.debug("...call [to={}, from={}] created with uuid={}", to, from, event.getUuid());
         return event;
     }
 }

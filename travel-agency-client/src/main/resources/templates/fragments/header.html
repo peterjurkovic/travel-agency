@@ -14,8 +14,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 	<script type="text/javascript" th:src="@{/static/js/chat.js}"></script>
-	
-	<th:block th:if="${links != null}">
+    <th:block th:if="${links != null}">
 		<th:block th:replace="${links}" />
 	</th:block>
 	<th:block th:if="${scripts != null}">

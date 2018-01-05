@@ -16,7 +16,14 @@ public class VoiceConfiguration {
     @Value("${voice.answerUrl}")
     private String answerUrl;
 
+    @Value("${voice.agentNumber}")
+    private String agentNumber;
+
     public String getAnswerUrl() {
         return answerUrl;
+    }
+
+    public String getAgentNumber() {
+        return agentNumber;
     }
 }
