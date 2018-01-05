@@ -16,7 +16,7 @@ public class MessageBuilder {
                 " format (e.g. +447702132132) if you lose your connection we will text you."),
         
         PHONE_NUMBER_SAVED(
-                "Cool, I'll text you on {phoneNumber} once you disconnect ;)"),
+                "Cool, We will text you on {phoneNumber} once you disconnect ;)"),
         
         PHONE_NUMBER_INVALID("Sorry, but it looks like it is not a valid phone number"),
         

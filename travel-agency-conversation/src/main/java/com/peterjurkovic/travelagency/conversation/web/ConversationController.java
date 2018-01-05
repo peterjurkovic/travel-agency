@@ -42,9 +42,7 @@ public class ConversationController {
     @Autowired
     private ConversationService conversationService; 
     
-//    @Autowired 
-//    private SimpMessagingTemplate messagingTemplate;
-//    
+    
     @Autowired
     private ApplicationEventPublisher publisher;
     

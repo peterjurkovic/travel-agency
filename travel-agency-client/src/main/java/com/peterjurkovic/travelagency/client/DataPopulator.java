@@ -7,9 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.peterjurkovic.travelagency.common.model.AdminUser;
 import com.peterjurkovic.travelagency.common.model.Country;
 import com.peterjurkovic.travelagency.common.model.Trip;
 import com.peterjurkovic.travelagency.common.model.User;
+import com.peterjurkovic.travelagency.common.repository.AdminUserRepository;
 import com.peterjurkovic.travelagency.common.repository.TripRepository;
 import com.peterjurkovic.travelagency.common.repository.UserRepository;
 import com.thedeanda.lorem.Lorem;
@@ -26,6 +28,9 @@ public class DataPopulator implements CommandLineRunner{
     
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private AdminUserRepository adminUserRepository;
     
     @Autowired
     private TripRepository tripRepository;
@@ -68,9 +73,11 @@ public class DataPopulator implements CommandLineRunner{
         
         User peter = user("email"+ "@" +"peterjurkovic.sk", pass  , "Peter" , "Jurkovic", "447756738686");
         userRepository.save(peter);
+        adminUserRepository.save( adminUser(peter) );
         
         User nicola = user("hello"+ "@" +"nicolagiacchetta.it", pass  , "Nicola" , "Giacchetta", "447397921621");
         userRepository.save(nicola);
+        adminUserRepository.save( adminUser(nicola) );
         
         for(int i = 0; i < 20; i++)
             userRepository.save( generateUser(lorem) );
@@ -84,6 +91,16 @@ public class DataPopulator implements CommandLineRunner{
         user.setLastName(lastName);
         user.setPhone(phoneNumber);
         return user;
+    }
+    
+    private AdminUser adminUser(User user){
+        AdminUser adminUser = new AdminUser();
+        adminUser.setEmail(user.getEmail());
+        adminUser.setPassword(user.getPassword());
+        adminUser.setFirstName(user.getFirstName());
+        adminUser.setLastName(user.getLastName());
+        adminUser.setPhone(user.getPhone());
+        return adminUser;
     }
     
     private User generateUser(Lorem lorem){

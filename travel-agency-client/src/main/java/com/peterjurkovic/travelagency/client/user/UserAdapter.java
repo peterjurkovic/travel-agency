@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.peterjurkovic.travelagency.client.verify.TwoFaUserDetails;
 import com.peterjurkovic.travelagency.common.model.User;
 
 public class UserAdapter implements TwoFaUserDetails {

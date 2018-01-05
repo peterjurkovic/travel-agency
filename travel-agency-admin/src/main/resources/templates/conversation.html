@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<head th:replace="fragments/header :: header-css(~{::title},~{::link},~{::script})">
+    <title>Welcome to Admin</title>
+</head> 
+</head>
+	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+	  	<nav th:replace="fragments/header :: header-nav"/>
+	  	
+	<div class="content-wrapper">
+	    <div class="container-fluid">
+	      <!-- Breadcrumbs-->
+	      <ol class="breadcrumb">
+	        <li class="breadcrumb-item">
+	          <a href="/">Dashboard</a>
+	        </li>
+	        <li class="breadcrumb-item">
+	          <a href="/conversations">Conversations</a>
+	        </li>
+	        
+	        <li class="breadcrumb-item active">Conversation detail</li>
+	      </ol>
+	      </div>
+      <h1>Conversations</h1>
+      <hr>
+     	<div class="container">
+     		<div class="row" style="border: 2px solid #eee; padding:15px;border-radius:4px;">
+     			<div class="col-3">
+		    		<nav class="navbar navbar-light bg-light">
+			    		Participants
+			    	</nav>
+		    		<ul class="list-group">
+		    			<li th:each="participant : ${conversation.participants}" class="list-group-item">
+		    				<i class="fa fa-user" aria-hidden="true"></i> &nbsp;
+		    				<strong th:text="${participant.name}">Participant</strong>
+		    			</li>
+		    		</ul>
+		    		
+		    		<div class="container" style="margin-top:20px;" th:if="${showJoinButton}">
+		    			<a href="#" class="btn btn-primary btn-lg btn-block">Join conversation</a>
+		    		</div>
+				 </div>   	
+					
+		    	  
+		    	
+		    	<div class="col-9">
+		    		<nav class="navbar navbar-light bg-light">
+			    		Messages
+			    	</nav>
+		    		
+		    		<div class="containter">
+		    			<ul class="list-group">
+			    			<li th:each="message : ${messages}" class="list-group-item">
+			    				<span style="margin-bottom:5px; background:#f5f5f5;border-radius:4px;padding:4px; display: block;font-weight: bold; font-size:.8em">
+			    					<span th:text="${{message.created}}"></span>
+			    					<span th:text="${message.participantName}"></span>
+			    				</span>
+			    				<span th:text="${message.content}">Participant</span>
+			    			</li>
+			    		</ul>
+		    		</div>
+		    	</div>   
+		     </div>
+     	</div>
+    </div>
+	</body>
+</html>

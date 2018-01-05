@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.peterjurkovic.travelagency.client.user.TwoFaUserDetails;
 import com.peterjurkovic.travelagency.client.user.UserUtils;
 
 public class VerifyInterceptor implements HandlerInterceptor{

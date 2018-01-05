@@ -108,6 +108,14 @@ public class ConversationMessage {
         }
         return false;
     }
+    
+    @Transient
+    public String getParticipantName(){
+        if(conversation != null)
+            return conversation.findParticipantById(participantId).get().getName();
+        
+        return "";
+    }
 
     @Transient
     public Participant getParticipant(){

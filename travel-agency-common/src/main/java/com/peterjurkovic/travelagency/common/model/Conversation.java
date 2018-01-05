@@ -108,9 +108,18 @@ public class Conversation {
         return "Conversation [id=" + id + ", date=" + date + ", participants=" + participants + "]";
     }
     
+    @Transient
     public boolean hasAssignedBot(){
         return participants.stream()
                     .filter(Participant::isBot)
+                    .findFirst()
+                    .isPresent();
+    }
+    
+    @Transient
+    public boolean hasAssignedAgent(){
+        return participants.stream()
+                    .filter(Participant::isAgent)
                     .findFirst()
                     .isPresent();
     }
@@ -121,6 +130,25 @@ public class Conversation {
                     .filter(Participant::isBot)
                     .findFirst();
     }
+    
+    @Transient
+    public String getUserName(){
+        return this.participants.stream()
+                    .filter(Participant::isUser)
+                    .map(Participant::getName)
+                    .findFirst()
+                    .orElse("NOT ASSIGNED");
+    }
+
+    @Transient
+    public String getAgentName(){
+        return this.participants.stream()
+                    .filter(Participant::isAgent)
+                    .map(Participant::getName)
+                    .findFirst()
+                    .orElse("NOT ASSIGNED");
+    }
+
     
     @Transient
     public void setUserPhoneNumber(String phoneNumber){

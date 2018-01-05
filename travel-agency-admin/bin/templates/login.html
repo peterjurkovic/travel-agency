@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: header-css(~{::title},~{::link},~{::script})">
+    <title>ADMIN</title>
+</head>
+
+	<body class="bg-dark">
+	  <div class="container">
+	    <div class="card card-login mx-auto mt-5">
+	      <div class="card-header">ADMIN Login</div>
+	      <div class="card-body">
+	      
+	      	<div th:if="${param.error}">
+                 <div class="alert alert-danger">
+                     Invalid username or password.
+                 </div>
+             </div>
+             <div th:if="${param.logout}">
+                 <div class="alert alert-info">
+                     You have been logged out.
+                 </div>
+             </div>
+
+	        <form th:action="@{/login.html}" method="post">
+	          <div class="form-group">
+	            <label for="username">Email address</label>
+	            <input class="form-control" id="username" type="text" name="username" placeholder="Enter email">
+	          </div>
+	          <div class="form-group">
+	            <label for="password">Password</label>
+	            <input class="form-control" id="password" type="password" name="password"  placeholder="Password">
+	          </div>
+	        
+	           <input type="submit" class="btn btn-primary btn-block" value="Login" />
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	
+	</body>
+
+</html>

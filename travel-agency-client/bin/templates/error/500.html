@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header-css">
+    <title>500 - Opsss something went wrong</title>
+</head>
+<body>
+	<nav th:replace="fragments/header :: header"/>
+
+  	<div class="container">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12" style="margin-top: 5em;margin-bottom: 3em">
+                <h1  class="page-header text-center">500 - Opsss, sorry something web worng</h1>
+            </div>
+        </div>
+
+		<div class="row">
+			<P class="text-center">It's just a demo app, of corse there are some bugs ;-)</P>
+		</div>
+		
+        
+	</div>
+    
+	<footer th:include="fragments/footer :: footer" />
+</body>
+</html>

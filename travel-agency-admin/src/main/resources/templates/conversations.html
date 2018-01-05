@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<head th:replace="fragments/header :: header-css(~{::title},~{::link},~{::script})">
+    <title>Welcome to Admin</title>
+</head> 
+</head>
+	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+	  	<nav th:replace="fragments/header :: header-nav"/>
+	  	
+	<div class="content-wrapper">
+	    <div class="container-fluid">
+	      <!-- Breadcrumbs-->
+	      <ol class="breadcrumb">
+	        <li class="breadcrumb-item">
+	          <a href="/">Dashboard</a>
+	        </li>
+	        <li class="breadcrumb-item active">Conversations</li>
+	      </ol>
+	      </div>
+      <h1>Conversations</h1>
+      <hr>
+     	<div class="container">
+     		 <div class="row">
+		       	<div class="table-responsive">
+		            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+		              <thead>
+		                <tr>
+		                  <th>Created</th>
+		                  <th>User</th>
+		                  <th>Agent</th>
+		                  <th>Phone number</th>
+		                  <th>Join</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		                <tr th:each="conversation : ${conversations}" >
+		                  <td th:text="${{conversation.date}}">2017-20-20</td>
+		                  <td th:text="${conversation.userName}">User name</td>
+		                  <td th:text="${conversation.agentName}">Agent name</td>
+		                  <td th:text="${conversation.phoneNumber}">0908938419</td>
+		                  <td>
+		                  	<a th:href="|/conversations/${conversation.id}|">Show</a>
+		                  </td>
+		                </tr>
+		       		</tbody>
+		       		</table>
+		      		</div>
+		      	</div>
+     	</div>
+    </div>
+	</body>
+</html>

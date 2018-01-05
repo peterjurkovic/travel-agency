@@ -1,0 +1,110 @@
+package com.peterjurkovic.travelagency.admin;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import com.peterjurkovic.travelagency.common.model.AdminUser;
+import com.peterjurkovic.travelagency.common.model.Country;
+import com.peterjurkovic.travelagency.common.model.Trip;
+import com.peterjurkovic.travelagency.common.model.User;
+import com.peterjurkovic.travelagency.common.repository.AdminUserRepository;
+import com.peterjurkovic.travelagency.common.repository.TripRepository;
+import com.peterjurkovic.travelagency.common.repository.UserRepository;
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
+
+@Component
+public class AdminDataPopulator implements CommandLineRunner{
+
+  private final Logger log = LoggerFactory.getLogger(getClass());
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private AdminUserRepository adminUserRepository;
+    
+    @Autowired
+    private TripRepository tripRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    @Override
+    public void run(String... args) throws Exception {
+        Lorem lorem = LoremIpsum.getInstance();
+        populateUsers(lorem);
+        populateTrips(lorem);
+        
+    }
+    
+    private void populateTrips(Lorem lorem) {
+        log.info("Populating tips...");
+        tripRepository.deleteAll();
+        int img = 1;
+        for(int i = 0; i < 9; i++){
+            Trip trip = new Trip();
+            trip.setCreatedAt(trip.getCreatedAt().minusSeconds( img * 3337 ));
+            trip.setTitle( lorem.getTitle(2, 5));
+            trip.setCountryCode((i % 2 == 0 ? Country.CZ : Country.US));
+            trip.setDescription(lorem.getTitle(25, 40));
+            trip.setContent(lorem.getParagraphs(3, 10));     
+            trip.setAvatarUrl("http://upload.peterjurkovic.com/img/ta/" + img + ".jpg");
+            trip.setPurchases( i * img );         
+            if(img++ >= 6) img = 1;
+            tripRepository.save(trip);
+        }
+        
+        
+    }
+    
+    private void populateUsers(Lorem lorem) {
+        log.info("Populating users...");
+        userRepository.deleteAll();
+        adminUserRepository.deleteAll();
+        String pass = passwordEncoder.encode("123456");
+        
+        User peter = user("email"+ "@" +"peterjurkovic.sk", pass  , "Peter" , "Jurkovic", "447756738686");
+        userRepository.save(peter);
+        adminUserRepository.save( adminUser(peter) );
+        
+        User nicola = user("hello"+ "@" +"nicolagiacchetta.it", pass  , "Nicola" , "Giacchetta", "447397921621");
+        userRepository.save(nicola);
+        adminUserRepository.save( adminUser(nicola) );
+        
+        for(int i = 0; i < 20; i++)
+            userRepository.save( generateUser(lorem) );
+    }
+    
+    private User user(String email, String pass, String fistName, String lastName, String phoneNumber){
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(pass);
+        user.setFirstName(fistName);
+        user.setLastName(lastName);
+        user.setPhone(phoneNumber);
+        return user;
+    }
+    
+    private AdminUser adminUser(User user){
+        AdminUser adminUser = new AdminUser();
+        adminUser.setEmail(user.getEmail());
+        adminUser.setPassword(user.getPassword());
+        adminUser.setFirstName(user.getFirstName());
+        adminUser.setLastName(user.getLastName());
+        adminUser.setPhone(user.getPhone());
+        return adminUser;
+    }
+    
+    private User generateUser(Lorem lorem){
+        User user = new User();
+        user.setEmail(lorem.getEmail());
+        user.setFirstName( lorem.getFirstName() );
+        user.setLastName( lorem.getLastName());
+        return user;
+    }
+}
