@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.nexmo.client.NexmoClient;
 import com.nexmo.client.auth.AuthMethod;
 import com.nexmo.client.auth.TokenAuthMethod;
+import com.peterjurkovic.travelagency.common.tools.CommonProperties;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,4 +42,11 @@ public class NexmoConfig {
         AuthMethod jwtAuthMethod = new JWTAuthMethod(this.applicationId, new File(this.pathPrivateKey).toPath());
         return new NexmoClient(tokenAuthMethod, jwtAuthMethod);
     }
+    
+    
+    @Bean("commonProperties")
+    public CommonProperties commonProperties(){
+        return new CommonProperties(); 
+    }
+    
 }

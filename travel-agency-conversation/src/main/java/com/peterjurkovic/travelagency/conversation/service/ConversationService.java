@@ -3,6 +3,7 @@ package com.peterjurkovic.travelagency.conversation.service;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import com.peterjurkovic.travelagency.common.model.Conversation;
@@ -18,7 +20,8 @@ import com.peterjurkovic.travelagency.common.model.ConversationMessage;
 import com.peterjurkovic.travelagency.common.model.Participant;
 import com.peterjurkovic.travelagency.common.repository.ConversationMessageRepository;
 import com.peterjurkovic.travelagency.common.repository.ConversationRepository;
-import com.peterjurkovic.travelagency.conversation.model.CreateMessage; 
+import com.peterjurkovic.travelagency.conversation.model.CreateMessage;
+import com.peterjurkovic.travelagency.conversation.model.ParticipantId; 
 
 @Service
 public class ConversationService {
@@ -27,17 +30,24 @@ public class ConversationService {
     
     private final ConversationRepository repository;
     private final ConversationMessageRepository conversationMessageRepository;
+    private final SimpMessagingTemplate messagingTemplate;
     
     @Autowired
     public ConversationService(ConversationRepository repository,
-            ConversationMessageRepository conversationMessageRepository){
+           ConversationMessageRepository conversationMessageRepository,
+           SimpMessagingTemplate messagingTemplate){
         this.repository = repository;
         this.conversationMessageRepository = conversationMessageRepository;
+        this.messagingTemplate = messagingTemplate;
     }
     
     public List<ConversationMessage> getMessages(String conversatinoId, Instant createdBefore){
         Conversation conversation = getConversation(conversatinoId);
         return getMessages(conversation, createdBefore);
+    }
+    
+    public List<ConversationMessage> getLastMessages(Conversation conversation){
+        return getMessages(conversation, Instant.now() );
     }
     
     public List<ConversationMessage> getMessages(Conversation conversation, Instant createdBefore){
@@ -47,6 +57,22 @@ public class ConversationService {
         return page.getContent();
     }
     
+    public Participant joinConversation(Participant participant, String id){
+        Conversation conversation = getConversation(id);
+        if(participant.getId() == null){
+            participant.setId(UUID.randomUUID().toString());
+        }
+        if( ! conversation.getParticipants().contains(participant) ){
+            conversation.addParticipant(participant);
+            repository.save(conversation);
+        
+            messagingTemplate.convertAndSend("/participants/"+id, new ParticipantId(participant.getId()));
+            log.info("Participant joined conversation {} " , id);
+        }else{
+            log.warn("Participant already joned conversation {} " , id);
+        }
+        return participant;
+    }
     
     public Conversation inicateConversation(Participant creator){
         Conversation conversation = new Conversation();

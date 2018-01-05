@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.peterjurkovic.travelagency.client.verify.TwoFaUserDetails;
 import com.peterjurkovic.travelagency.common.model.User;
 
 

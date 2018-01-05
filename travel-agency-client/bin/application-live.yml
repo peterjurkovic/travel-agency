@@ -1,0 +1,11 @@
+
+server:
+  port: 8001
+  
+
+thymeleaf:
+    cache: true
+    
+client:
+  security:
+    twoFaEnabled: true 

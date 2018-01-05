@@ -1,0 +1,87 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="header-css(title,links,scripts)" >
+	<title th:replace="${title}">Admin</title>
+ 	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  	<meta name="author" content="Peter Jurkovic">
+  
+  	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.0.0-beta.3/css/bootstrap.min.css}" />
+  	<link rel="stylesheet" type="text/css" th:href="@{/static/css/sb-admin.css}" />
+  	<link rel="stylesheet" type="text/css" th:href="@{/static/css/admin-main.css}" />
+  
+  	<link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+ 	<link href="/static/css/sb-admin.css" rel="stylesheet">
+  
+ 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+  	<script type="text/javascript" th:src="@{/webjars/bootstrap/4.0.0-beta.3/js/bootstrap.bundle.min.js}"></script>
+ 	<script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script> 
+ 	<script type="text/javascript" th:src="@{/static/js/sockjs.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/stomp.min.js}"></script>
+ 	<script src="/static/js/main.js"></script>
+ 	 
+	<th:block th:if="${links != null}">
+		<th:block th:replace="${links}" />
+	</th:block>
+	<th:block th:if="${scripts != null}">
+		<th:block th:replace="${scripts}" />
+	</th:block>
+</head>
+<body>
+
+
+  <nav th:fragment="header-nav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.html">TravelWise Admin</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="/">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Dashboard</span>
+          </a>
+        </li>
+        
+         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="/conversations">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">Conversations</span>
+          </a>
+        </li>
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="tables.html">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">Bookings</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Trips</span>
+          </a>
+        </li>
+      </ul>
+      
+      
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+                
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</body>
+</html>

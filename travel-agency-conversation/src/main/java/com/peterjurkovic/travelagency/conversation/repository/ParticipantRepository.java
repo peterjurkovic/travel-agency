@@ -3,6 +3,7 @@ package com.peterjurkovic.travelagency.conversation.repository;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,7 +16,7 @@ public class ParticipantRepository {
 
     public synchronized void add(String conversationId, UnmodifiableParticipant participantId) {
         if (!activeSessions.containsKey(conversationId)) {
-            activeSessions.put(conversationId, new HashSet<>(4));
+            activeSessions.put(conversationId, new HashSet<>());
         }
         activeSessions.get(conversationId).add(participantId);
     }
@@ -27,10 +28,33 @@ public class ParticipantRepository {
         return activeSessions.get(conversationId);
     }
 
-    public synchronized void remove(String conversationId, String sessionId) {
-        if (activeSessions.containsKey(conversationId)) {
-            activeSessions.get(conversationId).remove(new UnmodifiableParticipant(sessionId));
+    public synchronized boolean isActive(String conversationId, String participantId){
+        if (!activeSessions.containsKey(conversationId)) {
+            return  false;
         }
+        return activeSessions.get(conversationId).stream()
+                .filter( p -> p.getId().equals( participantId ))
+                .count() > 0;
+    }
+    
+    public synchronized Optional<String> remove(String conversationId, String sessionId) {
+        if (activeSessions.containsKey(conversationId)) {
+            Set<UnmodifiableParticipant> onlineParticipants =  activeSessions.get(conversationId);
+            Optional<UnmodifiableParticipant> user = onlineParticipants.stream()
+                .filter( p -> p.getSessionId().equals(sessionId))
+                .findFirst();
+            
+            if(user.isPresent()){
+                onlineParticipants.remove(user.get());
+                if(onlineParticipants.isEmpty()){
+                    activeSessions.remove(conversationId);
+                }
+                return Optional.of(user.get().id);
+            }
+            
+            
+        }
+        return Optional.empty();
     }
     
     

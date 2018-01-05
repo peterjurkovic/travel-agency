@@ -1,18 +1,18 @@
 package com.peterjurkovic.travelagency.conversation.event;
 
+import static com.peterjurkovic.travelagency.conversation.utils.AwaitUtils.await;
+
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
@@ -42,6 +42,26 @@ public class AgencyBot {
     @Autowired
     private ConversationRepository conversationRepository;
     
+    @Autowired
+    private List<BotAnswer> answers;
+    
+    @Async
+    @EventListener
+    public void handleUserMessage(UserMessageCreatedEvent event){
+        log.info("UserMessageCreatedEvent" );
+        
+        await( 50L );
+        
+        ConversationMessage message = event.getMessage();
+       
+        for(BotAnswer answer : answers){
+            if(answer.tryAnswer(message)){
+                log.info("Bot answered on message {}" , message.getId());
+                break;
+            }
+        }
+    }
+    
     @EventListener
     public void handleNewSubscription(SessionSubscribeEvent event){
         SimpMessageHeaderAccessor headers = SimpMessageHeaderAccessor.wrap(event.getMessage());
@@ -70,15 +90,7 @@ public class AgencyBot {
         }
     }
     
-    @SubscribeMapping("/topic/bot/{conversationId}")
-    public void handleUserMessages(
-            @Payload ConversationMessage message,
-            @DestinationVariable String conversationId){
-        
-        log.info("User Message {}", message);
-        
-    }
-    
+
     public boolean shouldAskForPhoneNumber(Conversation conversation){
         if(conversation.hasPhoneNumberAssigned()){
             return false;

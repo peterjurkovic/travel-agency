@@ -27,3 +27,6 @@ nexmo:
   applicationId: 094555bc-747e-4c60-bbe9-b37892a2818f
   jwtPrivateKey: /home/nicolagiacchetta/personal/travel-agency/keys/private.key
 
+
+conversation:
+  url: http://localhost:8002     

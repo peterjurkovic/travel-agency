@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      database: travelagency
+      username: travelagency
+
+server:
+  port: 8003
+  
+logging:
+  level:
+    org.springframework.web: INFO
+    com.peterjurkovic.travelagency: DEBUG
+    
+    
+conversation:
+  url: http://localhost:8002    

@@ -7,10 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 
 import com.peterjurkovic.travelagency.common.model.Participant;
+import com.peterjurkovic.travelagency.conversation.model.ParticipantId;
 import com.peterjurkovic.travelagency.conversation.repository.ParticipantRepository;
 import com.peterjurkovic.travelagency.conversation.repository.ParticipantRepository.UnmodifiableParticipant;
 import com.peterjurkovic.travelagency.conversation.utils.ConversationUtils;
@@ -27,6 +29,9 @@ public class ParticipantListener {
     @Autowired
     private ConversationUtils conversationUtils;
     
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+    
     @EventListener
     private void hadnleSubscribe(SessionSubscribeEvent event) {
         SimpMessageHeaderAccessor headers = SimpMessageHeaderAccessor.wrap(event.getMessage());
@@ -38,7 +43,8 @@ public class ParticipantListener {
             String session = headers.getSessionId();
             UnmodifiableParticipant user = new UnmodifiableParticipant(session, participant.get());
             participantRepository.add(conversatinoId.get(), user);
-            log.info("User subscribed {} conversatinoId {}", user, conversatinoId);
+            notifiyAboutChange(conversatinoId.get(), participant.get().getId());
+            log.info("User subscribed {} conversatinoId {}", user, conversatinoId.get());
         }
     }
     
@@ -49,10 +55,18 @@ public class ParticipantListener {
         if(  conversatinoId .isPresent() ){
           
             String session = headers.getSessionId();
-
-            participantRepository.remove(conversatinoId.get(), session);
-            log.info("User unsubscribed conversatinoId {}", conversatinoId);
+            Optional<String> participantId = participantRepository.remove(conversatinoId.get(), session);
+            
+            if(participantId.isPresent()){
+                notifiyAboutChange(conversatinoId.get(), participantId.get());
+                log.info("User unsubscribed conversatinoId {}", conversatinoId);
+            }
         }
         
+    }
+
+    private void notifiyAboutChange(String conversatinoId, String participantId) {
+        String destination = "/participants/"+conversatinoId;
+        messagingTemplate.convertAndSend(destination, new ParticipantId(participantId));
     }
 }
