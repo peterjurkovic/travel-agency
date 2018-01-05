@@ -16,6 +16,10 @@
  	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
   	<script type="text/javascript" th:src="@{/webjars/bootstrap/4.0.0-beta.3/js/bootstrap.bundle.min.js}"></script>
  	<script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script> 
+ 	<script type="text/javascript" th:src="@{/static/js/sockjs.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/stomp.min.js}"></script>
+ 	<script src="/static/js/main.js"></script>
+ 	 
 	<th:block th:if="${links != null}">
 		<th:block th:replace="${links}" />
 	</th:block>

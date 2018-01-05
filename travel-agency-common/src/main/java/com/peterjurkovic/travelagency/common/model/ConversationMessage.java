@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -31,6 +32,7 @@ public class ConversationMessage {
     
     private String content;
     
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Instant created = Instant.now();
     
     private Type type = Type.USER;

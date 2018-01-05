@@ -16,15 +16,16 @@ import com.peterjurkovic.travelagency.common.model.AdminUser;
 import com.peterjurkovic.travelagency.common.model.Conversation;
 import com.peterjurkovic.travelagency.common.model.Participant;
 import com.peterjurkovic.travelagency.common.repository.ConversationRepository;
+import com.peterjurkovic.travelagency.common.utils.JsonUtils;
 
 @Controller
 public class AdminConversationsController {
     
     @Autowired
     private ConversationRepository repository;
-
-    @Autowired
-    private AdminConversationService service;
+//
+//    @Autowired
+//    private AdminConversationService service;
     
     @Autowired
     private AdminUserUtils userUtils;
@@ -41,8 +42,9 @@ public class AdminConversationsController {
         Optional<Conversation> conversation = repository.findById(id);
         if(conversation.isPresent()){
             model.put("conversation", conversation.get());
-            model.put("messages", service.getLastMessages(conversation.get()));
+//            model.put("messages", service.getLastMessages(conversation.get()));
             model.put("showJoinButton", showJoinButton(conversation.get()));
+            model.put("participant",toEncoededJson(userUtils.getLoggedUserOrThrow().toParticipant()));
         }
         return "conversation";
     }
@@ -51,9 +53,14 @@ public class AdminConversationsController {
         AdminUser user = userUtils.getLoggedUserOrThrow();
         
         return conversation.getParticipants().stream()
-            .filter( Participant::isAgent )
             .filter( p -> p.getId().equals( user.getId()) )
             .count() == 0;        
         
     }
+    
+    private static String toEncoededJson(Participant participant){
+        return JsonUtils.toJson(participant) ;
+    }
+    
+    
 }

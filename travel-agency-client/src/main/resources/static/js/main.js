@@ -1,6 +1,6 @@
 
 (function($) {
-	 $.postJSON = function(url, data) {
+	 	$.postJSON = function(url, data) {
 		 return $.doReq('POST', url, data);
 	    };
 	    

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.nexmo.client.NexmoClient;
 import com.nexmo.client.auth.AuthMethod;
 import com.nexmo.client.auth.TokenAuthMethod;
+import com.peterjurkovic.travelagency.common.tools.CommonProperties;
 
 @Component
 @Configuration
@@ -26,4 +27,11 @@ public class NexmoConfig {
         AuthMethod auth = new TokenAuthMethod(this.apiKey, this.apiSecret);
         return new NexmoClient(auth);
     }
+    
+    
+    @Bean("commonProperties")
+    public CommonProperties commonProperties(){
+        return new CommonProperties(); 
+    }
+    
 }

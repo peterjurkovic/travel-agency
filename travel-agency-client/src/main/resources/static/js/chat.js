@@ -106,7 +106,7 @@ function connect(host){
 		var $input = $('#btn-input'),
 			conversationId = conversationSession.getConversationId(),
 			participantId = conversationSession.getParticipantId(),
-			messageContent = $input.val();
+			messageContent = $.trim($input.val());
 		
 		if(messageContent){
 			var message = {

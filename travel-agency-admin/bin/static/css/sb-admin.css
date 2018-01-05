@@ -344,3 +344,34 @@ footer.sticky-footer {
 @media (min-width: 992px) {
   body.sidenav-toggled footer.sticky-footer {
     width: calc(100% - 55px); } }
+    
+    
+.participants li.true{
+	color : green;
+}    
+
+.hidden{
+	display: none;
+}
+
+.chat-head{
+	margin-bottom:5px; border-radius:4px;padding:4px; display: block;font-weight: bold; font-size:.7em;
+  background: #eee;
+}
+
+.chat-time{
+  display:inline-block;
+  padding: 1px 5px;
+  margin:0 5px;
+  border-right: 1px solid #ccc;
+  
+}
+
+.chat-content{
+  display:inline-block;
+  width:100%;
+  font-size:.9em;
+  border-radius:6px;
+  padding:5px 10px;
+  
+}

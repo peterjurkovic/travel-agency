@@ -11,3 +11,6 @@ logging:
   level:
     org.springframework.web: DEBUG
     com.peterjurkovic.travelagency: DEBUG
+    
+conversation:
+  url: http://localhost:8002

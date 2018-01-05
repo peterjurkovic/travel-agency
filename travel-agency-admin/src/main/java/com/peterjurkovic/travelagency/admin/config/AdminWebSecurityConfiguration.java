@@ -2,6 +2,7 @@ package com.peterjurkovic.travelagency.admin.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +17,7 @@ import com.peterjurkovic.travelagency.admin.user.MongoAdminUserDetialsService;
 import com.peterjurkovic.travelagency.common.repository.AdminUserRepository;
 
 @Configuration
+@ComponentScan("com.peterjurkovic.travelagency.common")
 @EnableWebSecurity
 public class AdminWebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
