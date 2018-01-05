@@ -22,7 +22,7 @@ public class BrowserHandler extends BinaryWebSocketHandler {
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
         WebSocketSession phoneSession = WebSocketSessionsTable.sessionsTable.get("2");
 
-        if(phoneSession != null) {
+        if(phoneSession != null && phoneSession.isOpen()) {
             ByteBuffer echoMessage = message.getPayload();
             phoneSession.sendMessage(new BinaryMessage(echoMessage));
         }
@@ -42,11 +42,13 @@ public class BrowserHandler extends BinaryWebSocketHandler {
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         session.close(CloseStatus.SERVER_ERROR);
+        WebSocketSessionsTable.cleanSession("1");
         LOGGER.info("...BrowserHandler connection {} closed.", session.getId());
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         WebSocketSessionsTable.cleanSession("1");
+        LOGGER.info("...BrowserHandler connection {} closed.", session.getId());
     }
 }

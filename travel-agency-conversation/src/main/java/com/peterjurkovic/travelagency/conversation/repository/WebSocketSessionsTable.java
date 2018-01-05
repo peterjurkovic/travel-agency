@@ -1,5 +1,7 @@
 package com.peterjurkovic.travelagency.conversation.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -11,6 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class WebSocketSessionsTable {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(WebSocketSessionsTable.class);
+
+
     public final static ConcurrentHashMap<String, WebSocketSession> sessionsTable = new ConcurrentHashMap();
 
     public static void cleanSession(String sessionId) throws IOException {
@@ -18,6 +23,7 @@ public class WebSocketSessionsTable {
         if(browserSession != null){
             browserSession.close(CloseStatus.NO_STATUS_CODE);
             sessionsTable.remove(sessionId);
+            LOGGER.info("Session {} cleaned.", sessionId);
         }
     }
 }

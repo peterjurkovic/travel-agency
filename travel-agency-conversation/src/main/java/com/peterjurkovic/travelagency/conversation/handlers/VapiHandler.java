@@ -21,7 +21,7 @@ public class VapiHandler extends BinaryWebSocketHandler {
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
         WebSocketSession browserSession = WebSocketSessionsTable.sessionsTable.get("1");
-        if(browserSession != null) {
+        if(browserSession != null && browserSession.isOpen()) {
             ByteBuffer echoMessage = message.getPayload();
             browserSession.sendMessage(new BinaryMessage(echoMessage));
         }
@@ -42,6 +42,7 @@ public class VapiHandler extends BinaryWebSocketHandler {
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         session.close(CloseStatus.SERVER_ERROR);
+        WebSocketSessionsTable.cleanSession("2");
         LOGGER.info("...VapiHandler connection {} closed.", session.getId());
     }
 
