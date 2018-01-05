@@ -1,5 +1,6 @@
 package com.peterjurkovic.travelagency.conversation.handlers;
 
+import com.peterjurkovic.travelagency.conversation.repository.WebSocketSessionsTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.BinaryMessage;
@@ -9,7 +10,6 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.BinaryWebSocketHandler;
 
 import java.nio.ByteBuffer;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Nicola Giacchetta
@@ -18,11 +18,9 @@ public class BrowserHandler extends BinaryWebSocketHandler {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(VapiHandler.class);
 
-    public final static ConcurrentHashMap<String, WebSocketSession> sessionTable = new ConcurrentHashMap();
-
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
-        WebSocketSession phoneSession = BrowserHandler.sessionTable.get("2");
+        WebSocketSession phoneSession = WebSocketSessionsTable.sessionsTable.get("2");
 
         if(phoneSession != null) {
             ByteBuffer echoMessage = message.getPayload();
@@ -38,7 +36,7 @@ public class BrowserHandler extends BinaryWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         LOGGER.info("BrowserHandler connection {} established...", session.getId());
-        sessionTable.put("1", session);
+        WebSocketSessionsTable.sessionsTable.put("1", session);
     }
 
     @Override
@@ -49,8 +47,6 @@ public class BrowserHandler extends BinaryWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        WebSocketSession browserSession = sessionTable.get("1");
-        browserSession.close(CloseStatus.NO_STATUS_CODE);
-        sessionTable.remove("1");
+        WebSocketSessionsTable.cleanSession("1");
     }
 }

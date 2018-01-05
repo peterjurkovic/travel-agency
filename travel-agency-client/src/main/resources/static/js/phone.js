@@ -1,5 +1,6 @@
-
 'use strict';
+
+const host = "localhost";
 
 var constraints = window.constraints = {
   audio: true,
@@ -9,8 +10,6 @@ var constraints = window.constraints = {
 function handleSuccess(stream) {
 
   var audioTracks = stream.getAudioTracks();
-  console.log('Got stream with constraints:', constraints);
-  console.log('Using audio device: ' + audioTracks[0].label);
   stream.oninactive = function() {
     console.log('Stream ended');
   };
@@ -26,23 +25,18 @@ function stream(){
 }
 
 function triggerCall(){
-    $.post("http://localhost:8001/voice/calls/agent", function(){
+    $.post("http://".concat(host, ":8001/voice/calls/agent"), function(){
         navigator.mediaDevices.getUserMedia(constraints).
             then(handleSuccess).catch(handleError);
     });
 }
 
-
-
-
 function connect(stream) {
-	const ws = new WebSocket('ws://localhost:8002/browser');
+	const ws = new WebSocket("ws://".concat(host, ":8002/browser"));
     ws.binaryType = 'arraybuffer'
     send(stream, ws);
     ws.onmessage = play;
 }
-
-
 
 var AudioContext = window.AudioContext || window.webkitAudioContext
 var context = new AudioContext()
@@ -100,6 +94,4 @@ function play(event){
       source.connect(context.destination)
       source.start(time += buffer.duration)
     }
-
-
 }

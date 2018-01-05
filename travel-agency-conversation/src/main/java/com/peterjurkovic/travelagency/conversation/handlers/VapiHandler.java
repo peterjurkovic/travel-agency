@@ -1,5 +1,6 @@
 package com.peterjurkovic.travelagency.conversation.handlers;
 
+import com.peterjurkovic.travelagency.conversation.repository.WebSocketSessionsTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.BinaryMessage;
@@ -19,7 +20,7 @@ public class VapiHandler extends BinaryWebSocketHandler {
 
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
-        WebSocketSession browserSession = BrowserHandler.sessionTable.get("1");
+        WebSocketSession browserSession = WebSocketSessionsTable.sessionsTable.get("1");
         if(browserSession != null) {
             ByteBuffer echoMessage = message.getPayload();
             browserSession.sendMessage(new BinaryMessage(echoMessage));
@@ -34,7 +35,7 @@ public class VapiHandler extends BinaryWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         LOGGER.info("VapiHandler Connection {} established...", session.getId());
-        BrowserHandler.sessionTable.put("2", session);
+        WebSocketSessionsTable.sessionsTable.put("2", session);
 
     }
 
@@ -46,8 +47,6 @@ public class VapiHandler extends BinaryWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        WebSocketSession phoneSession = BrowserHandler.sessionTable.get("2");
-        phoneSession.close(CloseStatus.NO_STATUS_CODE);
-        BrowserHandler.sessionTable.remove("2");
+        WebSocketSessionsTable.cleanSession("2");
     }
 }
