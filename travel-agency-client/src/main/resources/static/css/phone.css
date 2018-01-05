@@ -1,6 +1,4 @@
 #phone {
-    position: fixed;
-    bottom: 0;
-    right: 50px;
+    text-align: center;
     display: none;
 }
