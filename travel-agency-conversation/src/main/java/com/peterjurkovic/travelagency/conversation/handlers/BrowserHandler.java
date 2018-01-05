@@ -16,37 +16,41 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BrowserHandler extends BinaryWebSocketHandler {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(com.peterjurkovic.travelagency.conversation.handlers.ExampleVoice.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(VapiHandler.class);
 
     public final static ConcurrentHashMap<String, WebSocketSession> sessionTable = new ConcurrentHashMap();
 
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
-        LOGGER.info("Handling message...");
         WebSocketSession phoneSession = BrowserHandler.sessionTable.get("2");
 
         if(phoneSession != null) {
             ByteBuffer echoMessage = message.getPayload();
             phoneSession.sendMessage(new BinaryMessage(echoMessage));
         }
-        LOGGER.info("...handled!");
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        LOGGER.info("Text Message Received {}", message.getPayload());
+        LOGGER.info("BrowserHandler Text Message skipped {}", message.getPayload());
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        LOGGER.info("Connection {} established...", session.getId());
+        LOGGER.info("BrowserHandler connection {} established...", session.getId());
         sessionTable.put("1", session);
     }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         session.close(CloseStatus.SERVER_ERROR);
-        LOGGER.info("...connection {} closed.", session.getId());
+        LOGGER.info("...BrowserHandler connection {} closed.", session.getId());
     }
 
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        WebSocketSession browserSession = sessionTable.get("1");
+        browserSession.close(CloseStatus.NO_STATUS_CODE);
+        sessionTable.remove("1");
+    }
 }

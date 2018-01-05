@@ -1,7 +1,7 @@
 package com.peterjurkovic.travelagency.conversation.config;
 
 import com.peterjurkovic.travelagency.conversation.handlers.BrowserHandler;
-import com.peterjurkovic.travelagency.conversation.handlers.ExampleVoice;
+import com.peterjurkovic.travelagency.conversation.handlers.VapiHandler;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Bean
     public WebSocketHandler myHandler() {
-        return new ExampleVoice();
+        return new VapiHandler();
     }
 
     @Bean

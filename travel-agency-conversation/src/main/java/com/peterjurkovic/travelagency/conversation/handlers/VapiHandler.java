@@ -9,36 +9,31 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.BinaryWebSocketHandler;
 
 import java.nio.ByteBuffer;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Nicola Giacchetta
  */
-public class ExampleVoice extends BinaryWebSocketHandler {
+public class VapiHandler extends BinaryWebSocketHandler {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ExampleVoice.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(VapiHandler.class);
 
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
-        LOGGER.info("Handling message...");
-
         WebSocketSession browserSession = BrowserHandler.sessionTable.get("1");
-
         if(browserSession != null) {
             ByteBuffer echoMessage = message.getPayload();
-            //        LOGGER.info(echoMessage.toString());
             browserSession.sendMessage(new BinaryMessage(echoMessage));
         }
-        LOGGER.info("...handled!");
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
+        LOGGER.info("VapiHandler Text Message skipped {}", message.getPayload());
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        LOGGER.info("Connection {} established...", session.getId());
+        LOGGER.info("VapiHandler Connection {} established...", session.getId());
         BrowserHandler.sessionTable.put("2", session);
 
     }
@@ -46,7 +41,13 @@ public class ExampleVoice extends BinaryWebSocketHandler {
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         session.close(CloseStatus.SERVER_ERROR);
-        LOGGER.info("...connection {} closed.", session.getId());
+        LOGGER.info("...VapiHandler connection {} closed.", session.getId());
     }
 
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        WebSocketSession phoneSession = BrowserHandler.sessionTable.get("2");
+        phoneSession.close(CloseStatus.NO_STATUS_CODE);
+        BrowserHandler.sessionTable.remove("2");
+    }
 }

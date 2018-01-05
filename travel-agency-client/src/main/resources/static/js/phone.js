@@ -1,15 +1,5 @@
-/*
- *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
- *
- *  Use of this source code is governed by a BSD-style license
- *  that can be found in the LICENSE file in the root of the source
- *  tree.
- */
 
 'use strict';
-
-// Put variables in global scope to make them available to the browser console.
-var audio = document.querySelector('audio');
 
 var constraints = window.constraints = {
   audio: true,
@@ -24,8 +14,6 @@ function handleSuccess(stream) {
   stream.oninactive = function() {
     console.log('Stream ended');
   };
-  window.stream = stream; // make variable available to browser console
-  //  audio.srcObject = stream;
   connect(stream);
 }
 
@@ -34,14 +22,10 @@ function handleError(error) {
 }
 
 function stream(){
-
     triggerCall();
-//    navigator.mediaDevices.getUserMedia(constraints).
-//        then(handleSuccess).catch(handleError);
 }
 
 function triggerCall(){
-//    alert("call");
     $.post("http://localhost:8001/voice/calls/agent", function(){
         navigator.mediaDevices.getUserMedia(constraints).
             then(handleSuccess).catch(handleError);
@@ -52,23 +36,13 @@ function triggerCall(){
 
 
 function connect(stream) {
-
 	const ws = new WebSocket('ws://localhost:8002/browser');
     ws.binaryType = 'arraybuffer'
     send(stream, ws);
-    console.log("sent");
-
     ws.onmessage = play;
-//	setConnected(true);
 }
 
-//function disconnect() {
-//    if (ws != null) {
-//        ws.close();
-//    }
-//    setConnected(false);
-//    console.log("Disconnected");
-//}
+
 
 var AudioContext = window.AudioContext || window.webkitAudioContext
 var context = new AudioContext()
