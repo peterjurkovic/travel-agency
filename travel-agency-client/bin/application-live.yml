@@ -9,3 +9,14 @@ thymeleaf:
 client:
   security:
     twoFaEnabled: true 
+   
+logging:
+  level:
+    org.springframework.web: INFO
+    com.peterjurkovic.travelagency: INFO
+  file: clien.log
+  
+
+conversation:
+  url: http://travelwise.fun:8002
+              

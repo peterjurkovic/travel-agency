@@ -10,7 +10,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.peterjurkovic.travelagency.admin.conversation.AdminConversationService;
 import com.peterjurkovic.travelagency.admin.user.AdminUserUtils;
 import com.peterjurkovic.travelagency.common.model.AdminUser;
 import com.peterjurkovic.travelagency.common.model.Conversation;
@@ -23,10 +22,7 @@ public class AdminConversationsController {
     
     @Autowired
     private ConversationRepository repository;
-//
-//    @Autowired
-//    private AdminConversationService service;
-    
+
     @Autowired
     private AdminUserUtils userUtils;
     
@@ -42,7 +38,6 @@ public class AdminConversationsController {
         Optional<Conversation> conversation = repository.findById(id);
         if(conversation.isPresent()){
             model.put("conversation", conversation.get());
-//            model.put("messages", service.getLastMessages(conversation.get()));
             model.put("showJoinButton", showJoinButton(conversation.get()));
             model.put("participant",toEncoededJson(userUtils.getLoggedUserOrThrow().toParticipant()));
         }

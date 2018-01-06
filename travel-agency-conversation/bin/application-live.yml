@@ -1,0 +1,14 @@
+logging:
+  level:
+    org.springframework.web: INFO
+    com.peterjurkovic.travelagency: INFO
+    
+conversation:
+  url: http://travelwise:8002
+  number: 447520632858
+  
+logging:
+  level:
+    org.springframework.web: INFO
+    com.peterjurkovic.travelagency: INFO
+  file: conversation.log
