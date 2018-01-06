@@ -118,6 +118,15 @@ public class ConversationMessage {
     }
     
     @Transient
+    public boolean isAgentMessage(){
+        Participant participant = getParticipant();
+        if(participant != null && participant.isAgent()){
+            return true;
+        }
+        return false;
+    }
+    
+    @Transient
     public String getParticipantName(){
         if(conversation != null)
             return conversation.findParticipantById(participantId).get().getName();
@@ -144,5 +153,12 @@ public class ConversationMessage {
         }
         return Optional.empty();
     }
+
+    @Override
+    public String toString() {
+        return "ConversationMessage [id=" + id + ", conversation=" + conversation + ", participantId=" + participantId + ", content=" + content + ", type="
+                + type + "]";
+    }
+
     
 }

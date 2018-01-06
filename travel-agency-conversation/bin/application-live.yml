@@ -12,3 +12,5 @@ logging:
     org.springframework.web: INFO
     com.peterjurkovic.travelagency: INFO
   file: conversation.log
+  pattern:
+    console: 

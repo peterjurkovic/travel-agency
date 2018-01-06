@@ -100,9 +100,12 @@ public class ConversationService {
         Conversation conversation = getConversation(message.getConversationId());
         ConversationMessage conversationMessage = message.toConversationMessage(conversation);
         
-        if( ! sessionRepository.isParticipantOnline(conversationMessage.getParticipantId())){
-            conversationMessage.setType(Type.SMS);
-            smsConversationService.sendSms(conversationMessage);
+        if( conversationMessage.isAgentMessage() ){
+            Optional<Participant> user = conversation.getUser();
+            
+            if(user.isPresent() && sessionRepository.isNotParticipantOnline(user.get().getId())){
+                smsConversationService.sendSms(conversationMessage, user.get());
+            }
         }
         
         conversationMessageRepository.save(conversationMessage);

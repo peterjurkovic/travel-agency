@@ -62,11 +62,12 @@ public class SmsConversationService {
         }
     }
     
-    public void sendSms(ConversationMessage message){
-        Optional<String> participantPhoneNumber = message.getParticipantPhoneNumber();
+    public void sendSms(ConversationMessage message, Participant participant){
+        String participantPhoneNumber = participant.getPhoneNumber();
         
-        if(participantPhoneNumber.isPresent()){
-            smsSender.sendMessage(message.getContent(), participantPhoneNumber.get());
+        if(participantPhoneNumber != null){
+            smsSender.sendMessage(message.getContent(), participantPhoneNumber);
+            message.setType(Type.SMS);
         }else{
             log.debug("User has not assinged his phone number");
         }

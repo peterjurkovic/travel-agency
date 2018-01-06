@@ -166,6 +166,15 @@ public class Conversation {
         }
     }
     
+    
+    @Transient
+    public Optional<Participant> getUser(){
+        return this.participants.stream()
+                    .filter(Participant::isUser)
+                    .findFirst();
+    }
+    
+    
     @Transient
     public Participant assignBot(){
         if(hasAssignedBot()){

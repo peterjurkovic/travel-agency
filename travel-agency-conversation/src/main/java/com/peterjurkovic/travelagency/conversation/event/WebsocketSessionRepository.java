@@ -42,9 +42,13 @@ public class WebsocketSessionRepository {
     
     public boolean isParticipantOnline(String participantId){
         return sessions.values().stream()
-                .filter( s -> s.equals(participantId))
+                .filter( s -> s.getParticipantId().equals(participantId))
                 .findFirst()
                 .isPresent();
+    }
+    
+    public boolean isNotParticipantOnline(String participantId){
+        return ! isParticipantOnline(participantId);
     }
     
     

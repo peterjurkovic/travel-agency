@@ -1,5 +1,5 @@
 $(function(){
-	var host = 'http://localhost:8002';
+	var host = $.trim($('#conversationUrl').text());
 	var chat = $('#chat-wrapp');
 	
 	
@@ -135,7 +135,7 @@ function connect(host){
     }
  */
 var renderMessage = function(message){
-	
+	console.log(message);
 	if(message.type == 'EVENT'){
 		return '<li class="chat-event clearfix">'+message.content+'</li>';
 	}

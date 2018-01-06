@@ -15,3 +15,7 @@ logging:
 conversation:
   url: http://localhost:8002
   number: 447520632858
+  
+
+database:
+  populateData : true

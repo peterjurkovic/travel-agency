@@ -14,9 +14,12 @@ logging:
   level:
     org.springframework.web: INFO
     com.peterjurkovic.travelagency: INFO
-  file: clien.log
-  
+  file: client.log
+  pattern:
+    console: 
 
 conversation:
   url: http://travelwise.fun:8002
-              
+
+database:
+  populateData : false

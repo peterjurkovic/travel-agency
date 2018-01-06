@@ -8,4 +8,4 @@ logging:
   file: admin.log  
     
 conversation:
-  url: http://travelwise.fun:8002    
+  url: http://travelwise.fun:8002  

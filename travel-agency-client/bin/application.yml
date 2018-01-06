@@ -17,8 +17,6 @@ client:
   security:
     twoFaEnabled: false 
 
-
 conversation:
   url: http://localhost:8002
   
- 
