@@ -95,6 +95,13 @@ public class Conversation {
     }
     
     @Transient
+    public Optional<Participant> findParticipantByPhone(String phoneNumber){
+        return participants.stream()
+                .filter( p ->  phoneNumber.equals(p.getPhoneNumber()) )
+                .findFirst();
+    }
+    
+    @Transient
     public boolean hasPhoneNumberAssigned(){
         return StringUtils.hasText(this.phoneNumber);
     }

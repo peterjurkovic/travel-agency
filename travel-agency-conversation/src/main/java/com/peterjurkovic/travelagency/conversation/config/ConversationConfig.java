@@ -23,4 +23,9 @@ public class ConversationConfig {
     public ParticipantRepository participantRepositoryBean(){
         return new ParticipantRepository();
     }
+    
+    @Bean
+    public ConversationProperties conversationProperties(){
+        return new ConversationProperties();
+    }
 }

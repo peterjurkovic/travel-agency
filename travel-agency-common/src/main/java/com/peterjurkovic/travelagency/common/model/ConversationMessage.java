@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Document
 public class ConversationMessage {
 
-    public enum Type{USER, EVENT}
+    public enum Type{USER, EVENT, SMS}
     
     @Id
     private String id;
@@ -42,6 +42,11 @@ public class ConversationMessage {
     
     public ConversationMessage(Conversation conversation) {
         this.conversation = conversation;
+    }
+    
+    public ConversationMessage(Conversation conversation, Participant participant) {
+        this(conversation);
+        this.participantId = participant.getId();
     }
 
     public String getId() {

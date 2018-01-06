@@ -7,7 +7,7 @@ public class CommonProperties {
 
     @Value("${conversation.url}")
     private String conversationUrl;
-
+ 
     public String getConversationUrl() {
         return conversationUrl;
     }
@@ -15,6 +15,7 @@ public class CommonProperties {
     public void setConversationUrl(String conversationUrl) {
         this.conversationUrl = conversationUrl;
     }
+
     
     
 }
