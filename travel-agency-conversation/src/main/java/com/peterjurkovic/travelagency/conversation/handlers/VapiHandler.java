@@ -17,7 +17,6 @@ import java.nio.ByteBuffer;
 public class VapiHandler extends BinaryWebSocketHandler {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(VapiHandler.class);
-    private String vapiSessionId;
 
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
