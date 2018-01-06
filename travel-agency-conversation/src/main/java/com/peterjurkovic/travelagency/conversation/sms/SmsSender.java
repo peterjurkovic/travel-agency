@@ -27,7 +27,7 @@ public class SmsSender {
     @Async
     public void sendMessage(String content, String numberTo){
         log.info("Sending message \"{}\" to ", content, numberTo);
-        Message message = new TextMessage(properties.getNumber(), numberTo, content);
+        Message message = new TextMessage(properties.getNumberFor(numberTo), numberTo, content);
         try {
             SmsSubmissionResult[] results = client.getSmsClient().submitMessage(message);
             

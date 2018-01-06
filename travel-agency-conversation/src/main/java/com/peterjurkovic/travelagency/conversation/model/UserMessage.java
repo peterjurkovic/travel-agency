@@ -1,7 +1,5 @@
 package com.peterjurkovic.travelagency.conversation.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.peterjurkovic.travelagency.common.model.Conversation;
 import com.peterjurkovic.travelagency.common.model.ConversationMessage;
 
 public class UserMessage {

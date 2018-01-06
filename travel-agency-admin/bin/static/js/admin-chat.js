@@ -8,7 +8,6 @@ $(function(){
 	var headers = { participantId : participant.id };
 	var autoconnect = false; 
 	
-	console.log(conversationUrl, conversationId, participant);
 	
 	loadLasMessage();
 	var joinBtn = $('.btn.join');
@@ -130,13 +129,43 @@ $(function(){
 	
 	function renderMessage(message){
 		var time = message.created;
-		return  '<li class="list-group-item">'+
-			'<span class="chat-head">'+
-				'<span class="chat-time">'+ time_ago(time) +'</span>'+
-				'<span class="chat-user">'+message.participant.name+'</span>'+
-			'</span>'+
-			'<span class="chat-content">'+message.content +'</span>'+
-		'</li>';
+		var type = message.type;
+		var name = message.participant.name;
+		var isMe = message.participant.id === participant.id;
+		var isSms = type === 'SMS';
+		if(type === 'EVENT')
+			return '<li class="list-group-item chat-event">'+message.content+'</li>';
+		
+		if(isMe) type = 'AGENT';
+		
+		var userIco = '<span class="col-2 chat-left">'+
+								'<span class="chat-user-ico">'+
+								'<i class="fa fa-user" aria-hidden="true"></i>'+ 
+							'</span>'+
+						'</span>';
+		
+		var content = '<span class="col-10 chat-right">'+
+						'<span class="chat-content ">'+
+							'<span class="chat-head">'+
+								'<span class="chat-time">'+
+									'<i class="fa fa-clock-o" aria-hidden="true"></i>'+
+									'<span class="datetime">'+ time_ago(time) +'</span>'+
+								'</span>'+
+								'<span class="chat-user">'+
+									'<i class="fa fa-user" aria-hidden="true"></i>'
+									+name+
+								'</span>'+
+								(isSms ? '<span class="chat-sms"><i class="fa fa-mobile" aria-hidden="true"></i>SMS</span>' : '')+
+							'</span>'
+							+message.content +
+						'</span>'+
+					'</span>';
+							
+		return '<li data-time="'+time+'" class="list-group-item msg '+type+'">'+
+				'<span class="row">'
+					+(isMe ? content+''+userIco : userIco+''+content)+
+				'</span>'+
+				'</li>';
 	}
 	
 	function loadLasMessage(){
@@ -163,7 +192,7 @@ $(function(){
 
 function initTimeRefresher(){
 	 setInterval(function(){
-		 $('#chat-wrapp .chat li').each(function(){
+		 $('#chat-wrapp .chat li.msg').each(function(){
 			var msg = $(this);
 			msg.find('.datetime').text(time_ago(msg.attr('data-time')));
 		 });
