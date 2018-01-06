@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WebSocketSessionsTable {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(WebSocketSessionsTable.class);
-
+    public final static String SESSION_ID_PREFIX = "session_id=";
 
     public final static ConcurrentHashMap<String, WebSocketSession> sessionsTable = new ConcurrentHashMap();
 

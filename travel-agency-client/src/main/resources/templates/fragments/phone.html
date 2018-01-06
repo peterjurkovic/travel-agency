@@ -1,10 +1,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<span th:fragment="phone" id="phone">
-        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-phone-alt"></span></button>
-        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-volume-off"></span></button>
+<span th:fragment="phone">
+        <a th:href="|javascript:triggerCall();|"  id="call-button" class="btn btn-primary"><span class="glyphicon glyphicon-earphone"></span> Call the Agent</a>
+        <span id="phone">
+                <button onclick="closeWebSocket()" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-phone-alt"></span></button>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-volume-off"></span></button>
+                <button type="button" class="btn btn-warning">Calling                 <div class="spinner">
+                  <div class="rect1"></div>
+                  <div class="rect2"></div>
+                  <div class="rect3"></div>
+                  <div class="rect4"></div>
+                  <div class="rect5"></div>
+                </div></button>
+
+                <!--<span id="calling-label" class="label label-warning">Calling </span>-->
+
+        </span>
+        <audio id="audio-player" controls loop>
+                <source src="../../static/sounds/ring.mp3" type="audio/mpeg">
+        </audio>
 </span>
+
 
 </body>
 </html>

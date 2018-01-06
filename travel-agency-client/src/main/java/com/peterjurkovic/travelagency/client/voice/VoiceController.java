@@ -1,6 +1,7 @@
 package com.peterjurkovic.travelagency.client.voice;
 
 import com.nexmo.client.NexmoClientException;
+import com.nexmo.client.voice.CallEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,10 @@ public class VoiceController {
 
     @PostMapping(value = VOICE_URL + "/calls/agent", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void callAgent() throws IOException, NexmoClientException {
+    public String callAgent() throws IOException, NexmoClientException {
         LOGGER.info("Calling agent...");
-        this.voiceService.callAgent("447397921621");
+        CallEvent event = this.voiceService.callAgent("447397921621");
         LOGGER.info("...agent called.");
+        return event.getUuid();
     }
 }

@@ -17,6 +17,7 @@ import java.nio.ByteBuffer;
 public class VapiHandler extends BinaryWebSocketHandler {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(VapiHandler.class);
+    private String vapiSessionId;
 
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
@@ -36,18 +37,19 @@ public class VapiHandler extends BinaryWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         LOGGER.info("VapiHandler Connection {} established...", session.getId());
         WebSocketSessionsTable.sessionsTable.put("2", session);
-
     }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+        WebSocketSessionsTable.cleanSession("1");
         session.close(CloseStatus.SERVER_ERROR);
-        WebSocketSessionsTable.cleanSession("2");
-        LOGGER.info("...VapiHandler connection {} closed.", session.getId());
+        LOGGER.info("...VapiHandler connection {} closed for transportError.", session.getId());
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        WebSocketSessionsTable.cleanSession("2");
+        WebSocketSessionsTable.cleanSession("1");
+        session.close(CloseStatus.NORMAL);
+        LOGGER.info("...VapiHandler connection {} closed.", session.getId());
     }
 }

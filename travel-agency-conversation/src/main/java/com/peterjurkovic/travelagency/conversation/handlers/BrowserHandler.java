@@ -9,7 +9,10 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.BinaryWebSocketHandler;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
+
+import static com.peterjurkovic.travelagency.conversation.repository.WebSocketSessionsTable.SESSION_ID_PREFIX;
 
 /**
  * @author Nicola Giacchetta
@@ -41,14 +44,16 @@ public class BrowserHandler extends BinaryWebSocketHandler {
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+        WebSocketSessionsTable.cleanSession("2");
         session.close(CloseStatus.SERVER_ERROR);
-        WebSocketSessionsTable.cleanSession("1");
-        LOGGER.info("...BrowserHandler connection {} closed.", session.getId());
+        LOGGER.info("...BrowserHandler connection {} closed for transportError.", session.getId());
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        WebSocketSessionsTable.cleanSession("1");
+        WebSocketSessionsTable.cleanSession("2");
+        session.close(CloseStatus.NORMAL);
         LOGGER.info("...BrowserHandler connection {} closed.", session.getId());
+
     }
 }

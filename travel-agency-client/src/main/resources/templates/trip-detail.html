@@ -21,7 +21,6 @@
 				<p style="margin: 1em 0;color: #555" th:text="${{trip.createdAt}}" class="row"></p>
 				<p th:text="${trip.description}">Trip description</p>
 				<a th:href="|/booking/${trip.id}|"  class="btn btn-success">Book it &raquo;</a>
-				<a th:href="|javascript:triggerCall();|"  class="btn btn-primary"><span class="glyphicon glyphicon-earphone"></span> Call the Agent</a>
 				<span th:replace="fragments/phone :: phone"/>
 			</div>
 		</div>
