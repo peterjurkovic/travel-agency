@@ -42,7 +42,11 @@ public abstract class DateUtils {
         if (date == null) {
             return null;
         }
-        return parseDateTime(date + " 00:00:00");
+        
+        if(date.length() == 10){
+            date += " 00:00:00";
+        }
+        return parseDateTime(date );
     }
     
     public static LocalDateTime parseDateTime(String dateTime) {

@@ -3,6 +3,7 @@ package com.peterjurkovic.travelagency.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,9 @@ public class DataPopulator implements CommandLineRunner{
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     
+    @Value("${database.populateData}")
+    private boolean populateDataEnabled;
+    
     @Autowired
     private UserRepository userRepository;
     
@@ -40,6 +44,10 @@ public class DataPopulator implements CommandLineRunner{
     
     @Override
     public void run(String... args) throws Exception {
+        if(! populateDataEnabled){
+            log.info("Data populationg is DISABLED");
+            return;
+        }
         Lorem lorem = LoremIpsum.getInstance();
         populateUsers(lorem);
         populateTrips(lorem);

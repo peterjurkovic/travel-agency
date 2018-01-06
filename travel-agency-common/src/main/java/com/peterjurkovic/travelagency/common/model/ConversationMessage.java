@@ -2,6 +2,7 @@ package com.peterjurkovic.travelagency.common.model;
 
 
 import java.time.Instant;
+import java.util.Optional;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -17,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Document
 public class ConversationMessage {
 
-    public enum Type{USER, EVENT}
+    public enum Type{USER, EVENT, SMS}
     
     @Id
     private String id;
@@ -42,6 +43,11 @@ public class ConversationMessage {
     
     public ConversationMessage(Conversation conversation) {
         this.conversation = conversation;
+    }
+    
+    public ConversationMessage(Conversation conversation, Participant participant) {
+        this(conversation);
+        this.participantId = participant.getId();
     }
 
     public String getId() {
@@ -112,6 +118,15 @@ public class ConversationMessage {
     }
     
     @Transient
+    public boolean isAgentMessage(){
+        Participant participant = getParticipant();
+        if(participant != null && participant.isAgent()){
+            return true;
+        }
+        return false;
+    }
+    
+    @Transient
     public String getParticipantName(){
         if(conversation != null)
             return conversation.findParticipantById(participantId).get().getName();
@@ -129,5 +144,21 @@ public class ConversationMessage {
         return null;
     }
     
+    
+    @Transient
+    public Optional<String> getParticipantPhoneNumber(){
+        Participant participant = getParticipant();
+        if(participant != null){
+            return Optional.ofNullable(participant.getPhoneNumber());
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public String toString() {
+        return "ConversationMessage [id=" + id + ", conversation=" + conversation + ", participantId=" + participantId + ", content=" + content + ", type="
+                + type + "]";
+    }
+
     
 }

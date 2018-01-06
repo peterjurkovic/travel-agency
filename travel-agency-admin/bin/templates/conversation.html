@@ -31,10 +31,7 @@
 			    		Participants
 			    	</nav>
 		    		<ul class="list-group participants">
-		    			<li th:each="participant : ${conversation.participants}" class="list-group-item">
-		    				<i class="fa fa-user" aria-hidden="true"></i> &nbsp;
-		    				<strong th:text="${participant.name}">Participant</strong>
-		    			</li>
+		    			<li>Loading..</li>
 		    		</ul>
 		    		
 		    		<div class="container" style="margin-top:20px;" th:if="${showJoinButton}">
@@ -51,7 +48,8 @@
 		    		
 		    		<div class="containter">
 		    			<div class="row" style="max-height: 400px;overflow-y: scroll;" >
-			    			<ul class="list-group chat-messages" style="width: 100%" ></ul>
+			    			<ul class="list-group chat-messages" style="width: 100%" >
+			    			</ul>
 			    		</div>
 			    		
 			    		

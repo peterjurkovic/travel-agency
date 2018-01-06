@@ -95,6 +95,13 @@ public class Conversation {
     }
     
     @Transient
+    public Optional<Participant> findParticipantByPhone(String phoneNumber){
+        return participants.stream()
+                .filter( p ->  phoneNumber.equals(p.getPhoneNumber()) )
+                .findFirst();
+    }
+    
+    @Transient
     public boolean hasPhoneNumberAssigned(){
         return StringUtils.hasText(this.phoneNumber);
     }
@@ -158,6 +165,25 @@ public class Conversation {
             user.get().setPhoneNumber(phoneNumber);
         }
     }
+    
+    
+    @Transient
+    public Optional<Participant> getUser(){
+        return this.participants.stream()
+                    .filter(Participant::isUser)
+                    .findFirst();
+    }
+    
+    
+    @Transient
+    public boolean isAnonymous(){
+        return this.participants.stream()
+                    .filter(Participant::isUser)
+                    .filter( p -> Participant.ANNONYMUS_USER.equals(p.getName()) )
+                    .findFirst()
+                    .isPresent();
+    }
+    
     
     @Transient
     public Participant assignBot(){

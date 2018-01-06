@@ -1,0 +1,11 @@
+server:
+  port: 8003
+  
+logging:
+  level:
+    org.springframework.web: INFO
+    com.peterjurkovic.travelagency: INFO
+  file: admin.log  
+    
+conversation:
+  url: http://travelwise.fun:8002  

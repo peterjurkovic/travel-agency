@@ -14,3 +14,10 @@ logging:
     
 conversation:
   url: http://localhost:8002
+  number:
+    UK: 447520632858
+    SW: 46765196078
+  
+
+database:
+  populateData : true

@@ -1,5 +1,5 @@
 $(function(){
-	var host = 'http://localhost:8002';
+	var host = $.trim($('#conversationUrl').text());
 	var chat = $('#chat-wrapp');
 	
 	
@@ -135,6 +135,11 @@ function connect(host){
     }
  */
 var renderMessage = function(message){
+	console.log(message);
+	if(message.type == 'EVENT'){
+		return '<li class="chat-event clearfix">'+message.content+'</li>';
+	}
+	
 	var isAgent = message.participant.type !== 'USER',
 		time = message.created,
 		name = message.participant.type == 'USER' ? 'You' : message.participant.name;
@@ -142,9 +147,10 @@ var renderMessage = function(message){
 	return '<li class="'+(isAgent ? 'right' : 'left')+' clearfix" data-time="'+time+'">'
 				+ avatar(isAgent, name) +
 			    '<div class="chat-body clearfix">'+
-			        '<div class="header">'+
+			        '<div class="header">'+ 
 			            '<strong class="primary-font">'+name+'</strong> <small class="pull-right text-muted">'+
-			                '<span class="glyphicon glyphicon-time"></span><span class="datetime">'+time_ago(time)+'</span></small>'+
+			              messageType(message) +
+			            '<span class="glyphicon glyphicon-time"></span><span class="datetime">'+time_ago(time)+'</span></small>'+
 			        '</div>'+
 			        '<p>'+ message.content + '</p>'+
 			    '</div>'+
@@ -159,6 +165,13 @@ var renderMessage = function(message){
 				'<span class="radius"></span><span class="glyphicon glyphicon-user"></span></span>'+
 				'</span>';
 		
+	}
+	
+	function messageType(message){
+		if(message.type === 'SMS'){
+			return '<span class="sms"><span class="glyphicon glyphicon-phone"></span>SMS</span>';
+		}
+		return '';
 	}
 }
 

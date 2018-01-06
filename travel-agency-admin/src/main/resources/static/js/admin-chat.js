@@ -8,7 +8,6 @@ $(function(){
 	var headers = { participantId : participant.id };
 	var autoconnect = false; 
 	
-	console.log(conversationUrl, conversationId, participant);
 	
 	loadLasMessage();
 	var joinBtn = $('.btn.join');
@@ -17,11 +16,13 @@ $(function(){
 			var url = conversationUrl + '/conversations/' + conversationId + "/join";
 			console.log('joining conversation...' + url);
 			$.putJSON(url, participant)
-			.done(function(res){
+			.done(function(agent){
 				joinBtn.remove();
 				connectToConversation(stompClient, headers);
 				showForm();
-				console.log('Joined conversation', res);
+				agent.active = true;
+				$('.participants').append(renderParticipant(agent));
+				console.log('Joined conversation', agent);
 			})
 			.fail(function(){
 				alert('Unable to join the conversation, please try it again later.');
@@ -41,6 +42,27 @@ $(function(){
 			printParticipants(message);
 		});
 		
+		
+		stompClient.subscribe("/topic/participants/"+conversationId, function(message) {
+			var participantEvent = $.parseJSON(message.body);
+			console.log('Event occured', participantEvent);
+			
+				$('.participants li').each(function(){
+					var li = $(this);
+					var id = li.attr('data-id');
+					
+					if(id === participantEvent.id){
+						if(participantEvent.type === 'LEFT'){
+							li.removeClass('true');
+						}else{
+							li.addClass('true');
+						}
+					}
+				});
+			
+			
+			
+		});
 		
 		connectToConversation(stompClient, headers);
 		
@@ -91,25 +113,59 @@ $(function(){
 		var html = '';
 		
 		for(var i in list){
-			html += '<li class="list-group-item '+list[i].active+'">'+
-			'<i class="fa fa-user" aria-hidden="true"></i> &nbsp;'+
-			'<strong>'+list[i].name+'</strong>'+
-			'</li>';
+			html += renderParticipant(list[i]);
 		}
 		$('.participants').html(html);
 		
 	}
 	
+	function renderParticipant(p){
+			return '<li data-id="'+p.id+'" class="list-group-item '+p.active+'">'+
+				'<i class="fa fa-user" aria-hidden="true"></i> &nbsp;'+
+				'<strong>'+p.name+'</strong>'+
+				'</li>';	
+	}
+	
 	
 	function renderMessage(message){
 		var time = message.created;
-		return  '<li class="list-group-item">'+
-			'<span class="chat-head">'+
-				'<span class="chat-time">'+ time_ago(time) +'</span>'+
-				'<span class="chat-user">'+message.participant.name+'</span>'+
-			'</span>'+
-			'<span class="chat-content">'+message.content +'</span>'+
-		'</li>';
+		var type = message.type;
+		var name = message.participant.name;
+		var isMe = message.participant.id === participant.id;
+		var isSms = type === 'SMS';
+		if(type === 'EVENT')
+			return '<li class="list-group-item chat-event">'+message.content+'</li>';
+		
+		if(isMe) type = 'AGENT';
+		
+		var userIco = '<span class="col-2 chat-left">'+
+								'<span class="chat-user-ico">'+
+								'<i class="fa fa-user" aria-hidden="true"></i>'+ 
+							'</span>'+
+						'</span>';
+		
+		var content = '<span class="col-10 chat-right">'+
+						'<span class="chat-content ">'+
+							'<span class="chat-head">'+
+								'<span class="chat-time">'+
+									'<i class="fa fa-clock-o" aria-hidden="true"></i>'+
+									'<span class="datetime">'+ time_ago(time) +'</span>'+
+								'</span>'+
+								'<span class="chat-user">'+
+									'<i class="fa fa-user" aria-hidden="true"></i>'
+									+name+
+								'</span>'+
+								(isSms ? '<span class="chat-sms"><i class="fa fa-mobile" aria-hidden="true"></i>SMS</span>' : '')+
+							'</span>'
+							+message.content +
+						'</span>'+
+					'</span>';
+							
+		return '<li data-time="'+time+'" class="list-group-item msg '+type+'">'+
+				'<span class="row">'
+					+(isMe ? content+''+userIco : userIco+''+content)+
+				'</span>'+
+				'</li>';
 	}
 	
 	function loadLasMessage(){
@@ -136,7 +192,7 @@ $(function(){
 
 function initTimeRefresher(){
 	 setInterval(function(){
-		 $('#chat-wrapp .chat li').each(function(){
+		 $('#chat-wrapp .chat li.msg').each(function(){
 			var msg = $(this);
 			msg.find('.datetime').text(time_ago(msg.attr('data-time')));
 		 });
