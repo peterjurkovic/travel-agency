@@ -31,3 +31,5 @@ nexmo:
 conversation:
   url: http://localhost:8002     
 
+database:
+  populateData : true
