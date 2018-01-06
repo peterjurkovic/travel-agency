@@ -17,11 +17,13 @@ import org.springframework.stereotype.Service;
 
 import com.peterjurkovic.travelagency.common.model.Conversation;
 import com.peterjurkovic.travelagency.common.model.ConversationMessage;
+import com.peterjurkovic.travelagency.common.model.ConversationMessage.Type;
 import com.peterjurkovic.travelagency.common.model.Participant;
 import com.peterjurkovic.travelagency.common.repository.ConversationMessageRepository;
 import com.peterjurkovic.travelagency.common.repository.ConversationRepository;
+import com.peterjurkovic.travelagency.conversation.event.ParticipantEvent;
 import com.peterjurkovic.travelagency.conversation.model.CreateMessage;
-import com.peterjurkovic.travelagency.conversation.model.ParticipantId; 
+
 
 @Service
 public class ConversationService {
@@ -65,8 +67,12 @@ public class ConversationService {
         if( ! conversation.getParticipants().contains(participant) ){
             conversation.addParticipant(participant);
             repository.save(conversation);
-        
-            messagingTemplate.convertAndSend("/participants/"+id, new ParticipantId(participant.getId()));
+            
+            
+            messagingTemplate.convertAndSend("/topic/participants/"+id, ParticipantEvent.joined(participant.getId()));
+            
+            messagingTemplate.convertAndSend("/topic/chat/"+id, joinConversationMessage(conversation, participant));
+            
             log.info("Participant joined conversation {} " , id);
         }else{
             log.warn("Participant already joned conversation {} " , id);
@@ -98,5 +104,14 @@ public class ConversationService {
         }
         log.warn("No conversation found ID: {}" , conversatinoId);
         throw new ConversationNotFoundException("Conversation was not found");
+    }
+    
+    
+    private ConversationMessage joinConversationMessage(Conversation conversation, Participant participant){
+        ConversationMessage message = new ConversationMessage(conversation, participant);
+        message.setType(Type.EVENT);
+        message.setContent(participant.getName() + " has joined");
+        conversationMessageRepository.save(message);
+        return message;
     }
 }

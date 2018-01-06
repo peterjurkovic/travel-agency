@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -33,11 +34,11 @@ import com.peterjurkovic.travelagency.common.model.ConversationMessage;
 import com.peterjurkovic.travelagency.common.model.InboundSmsMessage;
 import com.peterjurkovic.travelagency.common.model.Participant;
 import com.peterjurkovic.travelagency.common.repository.ConversationRepository;
+import com.peterjurkovic.travelagency.conversation.event.WebsocketSessionRepository;
 import com.peterjurkovic.travelagency.conversation.event.UserMessageCreatedEvent;
 import com.peterjurkovic.travelagency.conversation.model.CreateMessage;
 import com.peterjurkovic.travelagency.conversation.model.IniciateConversationRequest;
 import com.peterjurkovic.travelagency.conversation.model.ParticipantState;
-import com.peterjurkovic.travelagency.conversation.repository.ParticipantRepository;
 import com.peterjurkovic.travelagency.conversation.service.ConversationService;
 import com.peterjurkovic.travelagency.conversation.sms.SmsConversationService;
 
@@ -54,7 +55,7 @@ public class ConversationController {
     private ConversationRepository conversationRepository; 
     
     @Autowired
-    private ParticipantRepository participantRepository;
+    private WebsocketSessionRepository sessionRepository;
     
     @Autowired
     private SmsConversationService smsConversationService;
@@ -105,12 +106,19 @@ public class ConversationController {
     
     @SubscribeMapping("/participants/{id}")
     public List<ParticipantState> getParticipants(@DestinationVariable String id){
+        return loadOnlineParticipants(id);
+    }
+    
+    
+
+    private List<ParticipantState> loadOnlineParticipants(String id) {
         log.debug("@SubscribeMapping getParticipants {}", id);
         Optional<Conversation> conversation = conversationRepository.findById(id);
+        Set<String> onlineParticipantsIs = sessionRepository.getOnlineParticipantsInConversation(id);
         if(conversation.isPresent()){
             return conversation.get().getParticipants()
                         .stream()
-                        .map( p -> new ParticipantState(p, participantRepository.isActive(id, p.getId()) ))
+                        .map( p -> new ParticipantState(p, onlineParticipantsIs.contains(p.getId()) ))
                         .collect(Collectors.toList());
 
         }

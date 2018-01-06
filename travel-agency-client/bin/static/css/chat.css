@@ -86,3 +86,15 @@
     padding-left: 15px;
     width:400px;
 }
+
+.sms{
+	margin-right:10px;
+}
+
+.chat-event{
+	font-size:.9em;
+	color:#666;
+	border:0 !importnat;
+	text-align: center;
+	
+}

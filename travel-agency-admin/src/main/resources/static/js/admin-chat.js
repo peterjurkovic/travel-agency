@@ -17,11 +17,13 @@ $(function(){
 			var url = conversationUrl + '/conversations/' + conversationId + "/join";
 			console.log('joining conversation...' + url);
 			$.putJSON(url, participant)
-			.done(function(res){
+			.done(function(agent){
 				joinBtn.remove();
 				connectToConversation(stompClient, headers);
 				showForm();
-				console.log('Joined conversation', res);
+				agent.active = true;
+				$('.participants').append(renderParticipant(agent));
+				console.log('Joined conversation', agent);
 			})
 			.fail(function(){
 				alert('Unable to join the conversation, please try it again later.');
@@ -41,6 +43,27 @@ $(function(){
 			printParticipants(message);
 		});
 		
+		
+		stompClient.subscribe("/topic/participants/"+conversationId, function(message) {
+			var participantEvent = $.parseJSON(message.body);
+			console.log('Event occured', participantEvent);
+			
+				$('.participants li').each(function(){
+					var li = $(this);
+					var id = li.attr('data-id');
+					
+					if(id === participantEvent.id){
+						if(participantEvent.type === 'LEFT'){
+							li.removeClass('true');
+						}else{
+							li.addClass('true');
+						}
+					}
+				});
+			
+			
+			
+		});
 		
 		connectToConversation(stompClient, headers);
 		
@@ -91,13 +114,17 @@ $(function(){
 		var html = '';
 		
 		for(var i in list){
-			html += '<li class="list-group-item '+list[i].active+'">'+
-			'<i class="fa fa-user" aria-hidden="true"></i> &nbsp;'+
-			'<strong>'+list[i].name+'</strong>'+
-			'</li>';
+			html += renderParticipant(list[i]);
 		}
 		$('.participants').html(html);
 		
+	}
+	
+	function renderParticipant(p){
+			return '<li data-id="'+p.id+'" class="list-group-item '+p.active+'">'+
+				'<i class="fa fa-user" aria-hidden="true"></i> &nbsp;'+
+				'<strong>'+p.name+'</strong>'+
+				'</li>';	
 	}
 	
 	
