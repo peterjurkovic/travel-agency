@@ -22,7 +22,9 @@ import com.peterjurkovic.travelagency.common.model.Participant;
 import com.peterjurkovic.travelagency.common.repository.ConversationMessageRepository;
 import com.peterjurkovic.travelagency.common.repository.ConversationRepository;
 import com.peterjurkovic.travelagency.conversation.event.ParticipantEvent;
+import com.peterjurkovic.travelagency.conversation.event.WebsocketSessionRepository;
 import com.peterjurkovic.travelagency.conversation.model.CreateMessage;
+import com.peterjurkovic.travelagency.conversation.sms.SmsConversationService;
 
 
 @Service
@@ -33,6 +35,12 @@ public class ConversationService {
     private final ConversationRepository repository;
     private final ConversationMessageRepository conversationMessageRepository;
     private final SimpMessagingTemplate messagingTemplate;
+    
+    @Autowired
+    private WebsocketSessionRepository sessionRepository;
+    
+    @Autowired
+    private SmsConversationService smsConversationService;
     
     @Autowired
     public ConversationService(ConversationRepository repository,
@@ -90,7 +98,13 @@ public class ConversationService {
     
     public ConversationMessage create(CreateMessage message){
         Conversation conversation = getConversation(message.getConversationId());
-        ConversationMessage conversationMessage = message.toConversationMessage(conversation); 
+        ConversationMessage conversationMessage = message.toConversationMessage(conversation);
+        
+        if( ! sessionRepository.isParticipantOnline(conversationMessage.getParticipantId())){
+            conversationMessage.setType(Type.SMS);
+            smsConversationService.sendSms(conversationMessage);
+        }
+        
         conversationMessageRepository.save(conversationMessage);
         log.info("New message created {}" , conversationMessage.getId());
         return conversationMessage;

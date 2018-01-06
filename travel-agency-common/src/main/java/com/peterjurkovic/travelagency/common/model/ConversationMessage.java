@@ -2,6 +2,7 @@ package com.peterjurkovic.travelagency.common.model;
 
 
 import java.time.Instant;
+import java.util.Optional;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -134,5 +135,14 @@ public class ConversationMessage {
         return null;
     }
     
+    
+    @Transient
+    public Optional<String> getParticipantPhoneNumber(){
+        Participant participant = getParticipant();
+        if(participant != null){
+            return Optional.ofNullable(participant.getPhoneNumber());
+        }
+        return Optional.empty();
+    }
     
 }

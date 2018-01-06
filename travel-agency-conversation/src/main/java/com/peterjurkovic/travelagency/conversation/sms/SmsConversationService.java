@@ -1,10 +1,14 @@
 package com.peterjurkovic.travelagency.conversation.sms;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -31,27 +35,40 @@ public class SmsConversationService {
     private ConversationRepository conversationRepository;
     @Autowired
     private ConversationMessageRepository conversationMessageRepository;
-        
+    @Autowired
+    private SmsSender smsSender;
+    
     public void saveAndBroadcast(InboundSmsMessage smsMessage){
         log.info("Inbound message received {}", smsMessage);
         
         inboundSmsMessageRepository.save(smsMessage);
         
+        Pageable page = (Pageable) PageRequest.of(0, 1, Direction.DESC, "date");
+        List<Conversation> conversations = conversationRepository.findByPhoneNumber(smsMessage.getMsisdn(), page);
         
-        Optional<Conversation> conversation = conversationRepository.findFirsByPhoneNumberOrderByDateDesc(smsMessage.getMsisdn());
-        
-        if(conversation.isPresent()){
-            Optional<Participant> user = conversation.get().findParticipantByPhone(smsMessage.getMsisdn());
+        if( ! conversations.isEmpty()){
+            Conversation conversation =  conversations.get(0);
+            Optional<Participant> user = conversation.findParticipantByPhone(smsMessage.getMsisdn());
             
             if(user.isPresent()){
-                ConversationMessage conversationMessage = createConversationMessage(smsMessage, conversation.get(), user.get());
+                ConversationMessage conversationMessage = createConversationMessage(smsMessage, conversation, user.get());
                 broadcastMessage(conversationMessage);
             }else{
-                log.warn("No participant found associated with {} in {}", smsMessage.getMsisdn(), conversation.get().getId());
+                log.warn("No participant found associated with {} in {}", smsMessage.getMsisdn(), conversation.getId());
             }
                 
         }else{
             log.warn("No conversation found associated with {}", smsMessage.getMsisdn());
+        }
+    }
+    
+    public void sendSms(ConversationMessage message){
+        Optional<String> participantPhoneNumber = message.getParticipantPhoneNumber();
+        
+        if(participantPhoneNumber.isPresent()){
+            smsSender.sendMessage(message.getContent(), participantPhoneNumber.get());
+        }else{
+            log.debug("User has not assinged his phone number");
         }
     }
 

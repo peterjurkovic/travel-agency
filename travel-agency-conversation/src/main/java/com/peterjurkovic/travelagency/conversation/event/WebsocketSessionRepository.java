@@ -40,6 +40,13 @@ public class WebsocketSessionRepository {
         return Optional.ofNullable(sessions.remove(sessionId));
     }
     
+    public boolean isParticipantOnline(String participantId){
+        return sessions.values().stream()
+                .filter( s -> s.equals(participantId))
+                .findFirst()
+                .isPresent();
+    }
+    
     
     static class SessionConversations{
         

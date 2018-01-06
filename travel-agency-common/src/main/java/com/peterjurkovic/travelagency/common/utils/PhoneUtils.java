@@ -19,7 +19,7 @@ public abstract class PhoneUtils {
         if (number == null) {
             return false;
         }
-        number = number.replaceAll("\\s+", "");
+        number = number.trim().replaceAll("\\s+", "");
         if (!PHONE_PATTERN.matcher(number).matches()) {
             return false;
         }
