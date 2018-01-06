@@ -176,6 +176,16 @@ public class Conversation {
     
     
     @Transient
+    public boolean isAnonymous(){
+        return this.participants.stream()
+                    .filter(Participant::isUser)
+                    .filter( p -> Participant.ANNONYMUS_USER.equals(p.getName()) )
+                    .findFirst()
+                    .isPresent();
+    }
+    
+    
+    @Transient
     public Participant assignBot(){
         if(hasAssignedBot()){
            return getBot().get();

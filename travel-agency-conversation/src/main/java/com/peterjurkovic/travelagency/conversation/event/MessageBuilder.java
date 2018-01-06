@@ -12,8 +12,9 @@ public class MessageBuilder {
     
     enum MessageType{
         PHONE_NUMBER_REQUEST(
-                "Hi there! Please provider your phone number in international "+
-                " format (e.g. +447702132132) if you lose your connection we will text you."),
+                "Hi there! Please provide us with your phone number in the international "+
+                "format (e.g. +447702132132) and if you disconnect this chat, we will text you."+
+                " Type the phone number directly to this chat!"),
         
         PHONE_NUMBER_SAVED(
                 "Cool, We will text you on {phoneNumber} once you disconnect ;)"),
