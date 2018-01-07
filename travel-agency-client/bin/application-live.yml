@@ -18,6 +18,9 @@ logging:
   pattern:
     console: 
 
+voice:
+  answerUrl: http://travelwise.fun:8001/static/ncco.json
+  
 conversation:
   url: http://travelwise.fun:8002
 

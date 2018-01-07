@@ -17,9 +17,15 @@ client:
   security:
     twoFaEnabled: false 
 
+voice:
+  answerUrl: http://www.nicolagiacchetta.it/travel/ws/ncco.json
+  agentNumber: 447397921621
+
+nexmo:
+  jwtPrivateKey: /home/nicolagiacchetta/personal/travel-agency/keys/private.key
+
 conversation:
   url: http://localhost:8002
-  
 
 database:
   populateData : true

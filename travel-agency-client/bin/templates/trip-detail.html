@@ -5,8 +5,10 @@
 </head>
 <body>
 	<nav th:replace="fragments/header :: header"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/phone.css}" />
 
-  	<div class="container">
+
+	<div class="container">
 
         <!-- Page Header -->
      
@@ -19,6 +21,7 @@
 				<p style="margin: 1em 0;color: #555" th:text="${{trip.createdAt}}" class="row"></p>
 				<p th:text="${trip.description}">Trip description</p>
 				<a th:href="|/booking/${trip.id}|"  class="btn btn-success">Book it &raquo;</a>
+				<span th:replace="fragments/phone :: phone"/>
 			</div>
 		</div>
 		
@@ -32,9 +35,8 @@
 				
 			<p th:text="${trip.content}">Content</p>
 		</div>
-        
 	</div>
-    
+	<script type="text/javascript" th:src="@{/static/js/phone.js}"></script>
 	<footer th:include="fragments/footer :: footer" />
 	<div th:replace="fragments/chat :: chat"/>
 </body>

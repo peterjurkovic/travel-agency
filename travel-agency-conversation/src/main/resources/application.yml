@@ -12,9 +12,6 @@ logging:
     org.springframework.web: DEBUG
     com.peterjurkovic.travelagency: DEBUG
 
-nexmo:
-  jwtPrivateKey: /home/nicolagiacchetta/personal/travel-agency/keys/private.key
-
 conversation:
   url: http://localhost:8002
   number:
