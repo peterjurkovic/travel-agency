@@ -50,7 +50,7 @@ public class AgencyBot {
     public void handleUserMessage(UserMessageCreatedEvent event){
         log.info("UserMessageCreatedEvent" );
         
-        await( 50L );
+        await( 100L );
         
         ConversationMessage message = event.getMessage();
        

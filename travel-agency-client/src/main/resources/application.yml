@@ -24,9 +24,8 @@ voice:
 nexmo:
   jwtPrivateKey: /home/nicolagiacchetta/personal/travel-agency/keys/private.key
 
-
 conversation:
-  url: http://localhost:8002     
+  url: http://localhost:8002
 
 database:
   populateData : true
