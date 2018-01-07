@@ -3,6 +3,7 @@ package com.peterjurkovic.travelagency.client.voice;
 import com.nexmo.client.NexmoClientException;
 import com.nexmo.client.voice.CallEvent;
 import com.nexmo.client.voice.ModifyCallResponse;
+import com.peterjurkovic.travelagency.common.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author Nicola Giacchetta
@@ -50,4 +53,10 @@ public class VoiceController {
         LOGGER.info("...modify call response: {}", response == null ? "TERMINATED" : response.getMessage());
         return response;
     }
+
+    @PostMapping(value = VOICE_URL + "/calls/events/")
+    public void handleEvent(@RequestBody Map<String, String> event){
+        LOGGER.info("VAPI EVENT: " +  JsonUtils.toJson(event));
+    }
+
 }
