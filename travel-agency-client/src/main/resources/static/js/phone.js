@@ -1,6 +1,6 @@
 'use strict';
 
-var serverHostname = "localhost";
+var serverHostname = "www.travelwise.fun";
 
 var constraints = window.constraints = {
     audio: true,
