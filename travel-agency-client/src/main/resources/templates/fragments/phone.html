@@ -1,7 +1,8 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 
-<span th:fragment="phone">
+<span th:fragment="phone" sec:authorize="${isAuthenticated()}">
+
         <a th:href="|javascript:triggerCall();|"  id="call-button" class="btn btn-primary"><span class="glyphicon glyphicon-earphone"></span> Call the Agent</a>
         <span id="phone">
                 <button onclick="closeWebSocket()" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-phone-alt"></span></button>
