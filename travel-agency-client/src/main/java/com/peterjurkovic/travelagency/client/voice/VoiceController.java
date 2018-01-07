@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class VoiceController {
     public CallEvent callAgent() throws IOException, NexmoClientException {
         LOGGER.info("Calling agent...");
         CallEvent event = this.voiceService.callAgent("442038731824");
-        LOGGER.info("...agent called.");
+        LOGGER.info("...agent called. ID {}", event.getUuid());
         return event;
     }
 
@@ -54,7 +55,8 @@ public class VoiceController {
         return response;
     }
 
-    @PostMapping(value = VOICE_URL + "/calls/events/")
+    @ResponseBody
+    @RequestMapping(value = VOICE_URL + "/calls/events", produces = MediaType.APPLICATION_JSON_VALUE)
     public void handleEvent(@RequestBody Map<String, String> event){
         LOGGER.info("VAPI EVENT: " +  JsonUtils.toJson(event));
     }

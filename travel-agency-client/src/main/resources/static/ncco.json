@@ -6,7 +6,7 @@
   {
     "action":"connect",
     "eventUrl":[
-      "http:travelwise.fun/calls/events"
+      "http://travelwise.fun/voice/calls/events"
     ],
     "from":"442038731824",
     "endpoint":[
