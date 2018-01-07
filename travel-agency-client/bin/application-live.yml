@@ -19,7 +19,7 @@ logging:
     console: 
 
 voice:
-  answerUrl: http://travelwise.fun:8001/static/ncco.json
+  answerUrl: http://travelwise.fun/static/ncco.json
   
 conversation:
   url: http://travelwise.fun:8002
