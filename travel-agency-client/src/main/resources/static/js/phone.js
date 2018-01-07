@@ -10,6 +10,7 @@ var constraints = window.constraints = {
 var AudioContext = window.AudioContext || window.webkitAudioContext
 var context = new AudioContext()
 var ws;
+var uuid;
 
 function handleSuccess(stream) {
     startRinging();
@@ -38,9 +39,12 @@ function stream(){
 }
 
 function triggerCall(){
-    $.post("http://".concat(serverHostname, ":8001/voice/calls/agent"));
-    navigator.mediaDevices.getUserMedia(constraints).
+    $.post("http://".concat(serverHostname, ":8001/voice/calls/agent"), function(callEvent){
+        uuid = callEvent.uuid;
+        console.log(callEvent);
+        navigator.mediaDevices.getUserMedia(constraints).
             then(handleSuccess).catch(handleError);
+    });
 }
 
 
@@ -121,7 +125,12 @@ function displayPhoneControlsAndHideCallButton(){
 }
 
 function closeWebSocket(){
+    stopCall();
     ws.close();
     stopRinging();
     hidePhoneControlsAndDisplayCallButton();
+}
+
+function stopCall(){
+    $.post("http://".concat(serverHostname, ":8001/voice/calls/agent/", uuid));
 }
