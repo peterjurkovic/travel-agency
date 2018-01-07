@@ -2,6 +2,9 @@ package com.peterjurkovic.travelagency.common.config;
 
 
 import com.nexmo.client.auth.JWTAuthMethod;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,10 +22,14 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+import javax.annotation.PostConstruct;
+
 @Component
 @Configuration
 public class NexmoConfig {
 
+    private final Logger log = LoggerFactory.getLogger(getClass());
+    
     @Value("${nexmo.apiKey}")
     private String apiKey;
     
@@ -48,5 +55,17 @@ public class NexmoConfig {
     public CommonProperties commonProperties(){
         return new CommonProperties(); 
     }
+    
+    @PostConstruct
+    private void print(){
+        log.info(this.toString());
+    }
+
+
+    @Override
+    public String toString() {
+        return "NexmoConfig [apiKey=" + apiKey + ", applicationId=" + applicationId + "]";
+    }
+    
     
 }

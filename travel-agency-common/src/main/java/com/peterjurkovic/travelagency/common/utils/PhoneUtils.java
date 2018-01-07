@@ -1,7 +1,6 @@
 package com.peterjurkovic.travelagency.common.utils;
 
 import java.util.Optional;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -13,7 +12,7 @@ public abstract class PhoneUtils {
 
     private static final Pattern PHONE_PATTERN = Pattern.compile("^[+]?\\d{3,16}$");
 
-    private static final Pattern MATCH_NUMBER_MATTERN = Pattern.compile(".*(\\+?[0-9]{6,15})+.*");
+    private static final Pattern REMOVE_NON_NUMERIC_CHARS = Pattern.compile("[\\D]");
     
     public static boolean isValidNumber(String number) {
         if (number == null) {
@@ -47,18 +46,15 @@ public abstract class PhoneUtils {
         if(message == null){
             return Optional.empty();
         }
-        
-        Matcher matcher = MATCH_NUMBER_MATTERN.matcher(message);
-        if(matcher.matches()){
-            String number = matcher.group(1);
-            
-            try {
-                return Optional.ofNullable(toInternationalFormat(number));
-            } catch (NumberParseException e) {
-                // ignore
-            }
-            
+
+        String number = REMOVE_NON_NUMERIC_CHARS.matcher(message).replaceAll("");
+   
+        try {
+            return Optional.ofNullable(toInternationalFormat(number));
+        } catch (NumberParseException e) {
+
         }
+
         return Optional.empty();
     }
 
