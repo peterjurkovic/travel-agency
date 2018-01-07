@@ -3,12 +3,14 @@
 	<title th:replace="${title}">TravelWise</title>
   	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-													   
-	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/static/css/chat.css}" />
-	
-	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 	<script type="text/javascript" th:src="@{/static/js/stomp.min.js}"></script>
@@ -34,7 +36,7 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
            </button>
-           <a class="navbar-brand" href="/">TravelWise</a>
+           <a class="navbar-brand" href="/"><i class="fa fa-plane"></i> TravelWise</a>
        </div>
        <!-- Collect the nav links, forms, and other content for toggling -->
        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
