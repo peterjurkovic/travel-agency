@@ -1,10 +1,4 @@
 'use strict';
-$(function(){
-
-var serverHostname = "www.travelwise.fun";
-
-	serverHostname = $.trim($('#conversationUrl').text());
-	console.log('serverHostname: ' + serverHostname);
 
 
 var constraints = window.constraints = {
@@ -142,7 +136,5 @@ function closeWebSocket(){
 }
 
 function stopCall(){
-    $.post("http://".concat(serverHostname, ":8001/voice/calls/agent/", uuid));
+    $.post("/voice/calls/agent/"+uuid);
 }
-
-});
