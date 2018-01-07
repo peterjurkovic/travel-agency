@@ -1,6 +1,6 @@
 
 server:
-  port: 8001
+  port: 80
   
 
 thymeleaf:

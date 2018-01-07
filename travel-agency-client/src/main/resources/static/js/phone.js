@@ -27,7 +27,12 @@ window.onbeforeunload = function () {
 };
 
 function connectToVapiAndStream(stream) {
-	ws = new WebSocket("ws://".concat(document.location.host.replace('8001','8002'), "/browser"));
+	var wsUrl = "ws://travelwise.fun/browser";
+	if(document.location.host === 'localhost:8001'){
+		wsUrl = "ws://".concat(document.location.host.replace('8001','8002'), "/browser");
+	}
+	console.log(wsUrl);
+	ws = new WebSocket(wsUrl);
     ws.binaryType = 'arraybuffer'
     send(stream, ws);
     ws.onmessage = play;
