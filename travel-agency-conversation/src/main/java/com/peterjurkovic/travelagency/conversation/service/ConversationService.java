@@ -95,6 +95,8 @@ public class ConversationService {
         Conversation conversation = new Conversation();
         conversation.addParticipant(creator);
         repository.save(conversation);
+
+        messagingTemplate.convertAndSend("/topic/conversations", conversation);
         log.info("Conversation iniciated: {}" , conversation );
         return conversation;
     }

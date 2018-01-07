@@ -11,7 +11,7 @@
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Available destination
+                <h1 class="page-header">Available destinations &nbsp;
                     <small>Please not this is just a demo application</small>
                 </h1>
             </div>
@@ -23,38 +23,6 @@
         <h3>HOT destinations</h3>
         <div th:insert=" fragments/trips :: trips (${popular})"></div>
         
-        
-
-        <!-- Pagination 
-        <div class="row text-center">
-            <div class="col-lg-12">
-                <ul class="pagination">
-                    <li>
-                        <a href="#">&laquo;</a>
-                    </li>
-                    <li class="active">
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        -->
-        <!-- /.row -->
 	</div>
     
 	<footer th:include="fragments/footer :: footer" />

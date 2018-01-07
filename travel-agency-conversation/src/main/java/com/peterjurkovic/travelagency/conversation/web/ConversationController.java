@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -107,6 +109,13 @@ public class ConversationController {
     @SubscribeMapping("/participants/{id}")
     public List<ParticipantState> getParticipants(@DestinationVariable String id){
         return loadOnlineParticipants(id);
+    }
+    
+    
+    @SubscribeMapping("/conversations")
+    public List<Conversation> getConversations(){
+        PageRequest req = PageRequest.of(0, 30, Direction.DESC, "date");
+        return conversationRepository.findAll(req).getContent();
     }
     
     

@@ -77,6 +77,7 @@ public class DataPopulator implements CommandLineRunner{
     private void populateUsers(Lorem lorem) {
         log.info("Populating users...");
         userRepository.deleteAll();
+        adminUserRepository.deleteAll();
         String pass = passwordEncoder.encode("123456");
         
         User peter = user("email"+ "@" +"peterjurkovic.sk", pass  , "Peter" , "Jurkovic", "447756738686");
