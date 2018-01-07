@@ -36,7 +36,7 @@ public class VerifyService {
             nexmoClient.getVerifyClient().cancelVerification(requestId);
             log.info("A request {} has been canceled" , requestId);
         } catch (Exception e) {
-            log.error("Verification cancellation has faild for requestId " + requestId, e);
+            log.error("Verification cancellation has failed for requestId " + requestId, e);
         }
     }
     
@@ -53,10 +53,10 @@ public class VerifyService {
             return Optional.of(result);
             
         } catch (IOException | NexmoClientException e) {
-            log.error("Verifycation request of phone "+phone+" has faild", e);
+            log.error("Verification request of phone "+phone+" has failed", e);
             return Optional.empty();
         }catch( Exception e){
-            log.error("Verifycation request of phone "+phone+" has faild", e);
+            log.error("Verification request of phone "+phone+" has failed", e);
             return Optional.empty();
         }
         
@@ -72,7 +72,7 @@ public class VerifyService {
             log.info("Status: Request Id {} Status {}", requestId, result.getStatus());
             return Optional.of(result);
         } catch (IOException | NexmoClientException e) {
-            log.error("Verifycation request ID "+requestId+" has faild", e);
+            log.error("Verification request ID "+requestId+" has failed", e);
             return Optional.empty();
         }
         

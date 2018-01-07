@@ -33,9 +33,10 @@ public class VerifyController {
     
     @Autowired
     private UserUtils userUtils;
-    
+
     private final VerifyService verifyService;
-    
+
+    @Autowired
     public VerifyController(VerifyService verifyService){
         this.verifyService = verifyService;
     }
