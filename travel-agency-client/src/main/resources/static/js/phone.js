@@ -27,12 +27,14 @@ window.onbeforeunload = function () {
 };
 
 function connectToVapiAndStream(stream) {
+	console.log("Connecting to vapi...");
 	var wsUrl = "ws://travelwise.fun:8002/browser";
 	if(document.location.host === 'localhost:8001'){
 		wsUrl = "ws://localhost:8002/browser";
 	}
 	console.log(wsUrl);
 	ws = new WebSocket(wsUrl);
+    console.log("...websocket opened!");
     ws.binaryType = 'arraybuffer'
     send(stream, ws);
     ws.onmessage = play;
@@ -59,6 +61,7 @@ function triggerCall(){
 
 
 function send(stream, ws){
+	console.log("Sending onto the websocket...");
     var source = context.createMediaStreamSource(stream);
     var processor = context.createScriptProcessor(1024, 1, 1);
     var downsampled = new Int16Array(2048);
