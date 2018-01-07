@@ -16,10 +16,7 @@ logging:
     com.peterjurkovic.travelagency: INFO
   file: client.log
   pattern:
-    console: 
-
-voice:
-  answerUrl: http://travelwise.fun:8001/static/ncco.json
+    console:
   
 conversation:
   url: http://travelwise.fun:8002

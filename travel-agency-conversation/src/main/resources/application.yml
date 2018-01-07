@@ -12,6 +12,12 @@ logging:
     org.springframework.web: DEBUG
     com.peterjurkovic.travelagency: DEBUG
 
+nexmo:
+  apiKey: abecb1a7
+  apiSecret: 4965c0e6df2a0db9
+  applicationId: 094555bc-747e-4c60-bbe9-b37892a2818f
+  jwtPrivateKey: /home/nicolagiacchetta/personal/travel-agency/keys/private.key
+
 conversation:
   url: http://localhost:8002
   number:

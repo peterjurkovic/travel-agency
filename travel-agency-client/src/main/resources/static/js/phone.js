@@ -1,6 +1,5 @@
 'use strict';
 
-
 var constraints = window.constraints = {
     audio: true,
     video: false
@@ -35,11 +34,6 @@ function connectToVapiAndStream(stream) {
 
 function handleError(error) {
     console.log('navigator.getUserMedia error: ', error);
-}
-
-function stream(){
-    triggerCall();
-
 }
 
 function triggerCall(){
