@@ -1,6 +1,5 @@
 package com.peterjurkovic.travelagency.conversation.event;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -40,29 +39,27 @@ public class PhoneNumberRequestAnswer implements BotAnswer{
     public boolean tryAnswer(ConversationMessage message) {
         if(message.isUserMessage()){
             Conversation conversation = message.getConversation();
+            
+            if(conversation.getNumberRequests() > 2){
+                return false;
+            }
+            
             if(!conversation.hasPhoneNumberAssigned() && conversation.agentHasNotJoined()){
                 log.debug("Phone number extraction attempt");
-                if(conversation.getNumberRequests() > 4){
-                    return false;
-                }
+
+                conversation.incrementNumberInquires();
+                Optional<String> number = PhoneUtils.extractPhoneNumber(message.getContent());
                 
-                    List<ConversationMessage> messages = conversationService.getLastMessages(conversation);
-                    if(! messages.isEmpty() || messages.get(0).isBotMessage()){
-                    conversation.incrementNumberInquires();
-                    Optional<String> number = PhoneUtils.extractPhoneNumber(message.getContent());
-                    
-                    if(number.isPresent()){
-                        submitSuccessAnswer(message, conversation, number);
-                    }else{
+                if(number.isPresent()){
+                    submitSuccessAnswer(message, conversation, number);
+                }else{
+                    if(conversation.getNumberRequests() == 3){
+                        submitWaitForAgentAnswer(message, conversation);
+                    }else{    
                         submitInvalidPhoneNumber(message, conversation);
                     }
-                    
-                    return true;
                 }
-                    
-                if(conversation.getNumberRequests() == 3){
-                    submitWaitForAgentAnswer(message, conversation);
-                }    
+                return true;  
             }
         }
         return false;
@@ -74,7 +71,7 @@ public class PhoneNumberRequestAnswer implements BotAnswer{
                 .withAuthor(conversation.getBot().get())
                 .withConversation(conversation)
                 .build();
-        
+        conversationRepository.save(conversation);
         submitAnswer(answer);
     }
     
@@ -84,7 +81,7 @@ public class PhoneNumberRequestAnswer implements BotAnswer{
                 .withAuthor(conversation.getBot().get())
                 .withConversation(conversation)
                 .build();
-        
+        conversationRepository.save(conversation);
         submitAnswer(answer);
     }
 
@@ -109,6 +106,7 @@ public class PhoneNumberRequestAnswer implements BotAnswer{
         ConversationMessage conversationMessage = conversationService.create(answer);
         messagingTemplate.convertAndSend(destination, conversationMessage);
         log.info("Phone number answer sent: {}" , conversationMessage);
+        
     }
     
 }

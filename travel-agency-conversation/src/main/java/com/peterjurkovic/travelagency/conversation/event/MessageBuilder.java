@@ -17,12 +17,15 @@ public class MessageBuilder {
                 " Type the phone number directly to this chat!"),
         
         PHONE_NUMBER_SAVED(
-                "Cool, We will text you on {phoneNumber} once you disconnect ;)"),
+                "Cool, thanks! Btw what's your name?"),
         
         PHONE_NUMBER_INVALID("Sorry, but it looks like it is not a valid phone number"),
         
-        PHONE_NUMBER_REQUEST_FAILED("Sorry, but I'am not able read your number. Please wait for an agent.");
+        PHONE_NUMBER_REQUEST_FAILED("Hmm, to me it sill looks like like invalid number. Please wait for an agent."),
         
+        NEAME_INVALID("Are you sure this is your name?"),
+        NEAME_SAVED("Ok, thanks, please wait until any of avaiable agents join this conversation"),
+        NEAME_FAILED("Ok, thanks, please wait until any of avaiable agents join this conversation");
         private final String content;
 
         private MessageType(String content) {

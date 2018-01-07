@@ -23,6 +23,7 @@ public class Conversation {
     private String phoneNumber;
     private Status status = Status.ACTIVE;
     private int numberRequests;
+    private int nameRequests;
     
     @Indexed
     private List<Participant> participants = new ArrayList<>(4);
@@ -72,6 +73,16 @@ public class Conversation {
         this.numberRequests = numberRequests;
     }
 
+    
+    
+    public int getNameRequests() {
+        return nameRequests;
+    }
+
+    public void setNameRequests(int nameRequests) {
+        this.nameRequests = nameRequests;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -108,6 +119,11 @@ public class Conversation {
     @Transient
     public void incrementNumberInquires(){
         this.numberRequests++;
+    }
+    
+    @Transient
+    public void incrementNameInquires(){
+        this.nameRequests++;
     }
     
     @Override

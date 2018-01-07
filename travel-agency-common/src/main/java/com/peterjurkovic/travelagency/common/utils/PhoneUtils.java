@@ -13,7 +13,7 @@ public abstract class PhoneUtils {
 
     private static final Pattern PHONE_PATTERN = Pattern.compile("^[+]?\\d{3,16}$");
 
-    private static final Pattern MATCH_NUMBER_MATTERN = Pattern.compile(".*(\\+[0-9]{6,15})+.*");
+    private static final Pattern MATCH_NUMBER_MATTERN = Pattern.compile(".*(\\+?[0-9]{6,15})+.*");
     
     public static boolean isValidNumber(String number) {
         if (number == null) {

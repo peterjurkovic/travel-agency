@@ -1,0 +1,20 @@
+[
+  {
+    "action":"talk",
+    "text":"Please wait while we connect you"
+  },
+  {
+    "action":"connect",
+    "eventUrl":[
+      "https://www.travelwise.fun"
+    ],
+    "from":"442038731824",
+    "endpoint":[
+      {
+        "type":"websocket",
+        "uri":"ws://www.travelwise.fun:8002/vapi",
+        "content-type":"audio/l16;rate=16000"
+      }
+    ]
+  }
+]

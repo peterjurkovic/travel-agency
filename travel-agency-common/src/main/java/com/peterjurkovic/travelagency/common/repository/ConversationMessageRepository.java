@@ -15,5 +15,7 @@ public interface ConversationMessageRepository extends PagingAndSortingRepositor
 
     
     Page<ConversationMessage> findByConversationAndCreatedBefore(Conversation conversation, Instant createdBefore, Pageable pageable);
+    
+    Page<ConversationMessage> findByConversation(Conversation conversation, Pageable pageable);
 }
 
