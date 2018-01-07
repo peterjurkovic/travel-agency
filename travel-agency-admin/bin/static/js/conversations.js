@@ -46,7 +46,7 @@ $(function(){
         	 '<td>'+time_ago(item.date)+'</td>'+
         	 '<td>'+item.participants[0].name+'</td>'+
 	         '<td>'+agentName(item)+'</td>'+
-	         '<td>'+(item.phoneNumber ? item.phoneNumber : '-')+'</td>'+
+	         '<td>'+(item.phoneNumber ? ''+item.phoneNumber : '-')+'</td>'+
 	         '<td>'+
 	        	'<a href="/conversations/'+item.id+'">Show</a>'+
 	         '</td>'+
