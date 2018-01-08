@@ -29,11 +29,14 @@ hs_err_pid*
 
 # Subproject
 travel-agency-admin/build/
-travel-agency-admin/out/
+travel-agency-admin/nin/
+travel-agency-admin/bin/
 travel-agency-common/build/
 travel-agency-common/out/
+travel-agency-common/bin/
 travel-agency-client/build/
 travel-agency-client/out/
+travel-agency-common/bin/
 
 ### STS ###
 .apt_generated
