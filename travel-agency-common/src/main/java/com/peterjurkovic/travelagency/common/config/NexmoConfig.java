@@ -64,7 +64,7 @@ public class NexmoConfig {
 
     @Override
     public String toString() {
-        return "NexmoConfig [apiKey=" + apiKey + ", applicationId=" + applicationId + "]";
+        return "NexmoConfig [apiKey=" + apiKey + ", applicationId=" + applicationId + " pathPrivateKey="+pathPrivateKey+"]";
     }
     
     

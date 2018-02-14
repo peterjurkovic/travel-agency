@@ -13,7 +13,8 @@ client:
 logging:
   level:
     org.springframework.web: INFO
-    com.peterjurkovic.travelagency: INFO
+    com.peterjurkovic.travelagency: DEBUG
+    com.nexmo.client.voice : TRACE
   file: client.log
   pattern:
     console: 
