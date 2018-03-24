@@ -2,9 +2,12 @@
 
 Travel Agency integrated flow with call center. The system consits of three services
 
-1. Client service - avaiable to a clients using which can do a booking, comunicate with an agent and call the agent
+1. Client service - avaiable to a clients using which can do a booking, comunicate with an agent and call the agent via web sockets chat
 2. Conversation service - is responsible for communication 
 3. Admin service - Used by agent and booking management
+
+[![Travelwise](https://image.ibb.co/kDMs5S/Selection_083.png)](https://www.youtube.com/watch?v=n5H7uFH0tco)
+
 
 
 ## Stack
