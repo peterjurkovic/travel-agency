@@ -8,7 +8,7 @@ Travel Agency integrated flow with call center. The system consits of three serv
 
 [![Travelwise](https://image.ibb.co/kDMs5S/Selection_083.png)](https://www.youtube.com/watch?v=n5H7uFH0tco)
 
-
+It is just a demo application, not production ready.
 
 ## Stack
 - MongoDB 3.6
